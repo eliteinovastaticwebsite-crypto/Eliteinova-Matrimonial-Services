@@ -10,6 +10,11 @@ import banner4 from '../assets/banner4.png';
 import banner5 from '../assets/banner5.png';
 import photography from '../assets/photography.jpg';
 import catering from '../assets/catering.jpg';
+import weddinghalls from '../assets/weddinghalls.jpg';
+import decoration from '../assets/decoration.jpg'
+import invitation from '../assets/invitation.jpg'
+import makeup from '../assets/makeup.jpg'
+
 const Home = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
@@ -175,7 +180,7 @@ const Home = () => {
     <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
       <div className="w-full h-full rounded-full overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&h=400&fit=crop" 
+          src={photography}
           alt="Photography" 
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
@@ -192,7 +197,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=400&fit=crop" 
+                    src={catering}
                     alt="Catering & Foods" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -209,7 +214,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1519167758481-83f29da8c43e?w=400&h=400&fit=crop" 
+                    src={weddinghalls}
                     alt="Mandapam & Wedding Halls" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -226,7 +231,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1464347744102-11db6282f854?w=400&h=400&fit=crop" 
+                    src={decoration}
                     alt="Decorations" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -260,7 +265,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop" 
+                    src={invitation}
                     alt="Invitation & Gifts" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -277,7 +282,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop" 
+                    src={makeup} 
                     alt="Bridal & Groom Styling" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />

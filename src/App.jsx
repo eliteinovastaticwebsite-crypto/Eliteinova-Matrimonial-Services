@@ -14,6 +14,7 @@ import AboutUs from './pages/AboutUs';
 import Register from './pages/Register'; // You'll need to create this */}
 
 import Photography from './pages/Photography'; 
+import Catering from './pages/Catering';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/photography" element={<Photography />} /> {/* Add this route */}
+          <Route path="/catering" element={<Catering />} />
          {/*} <Route path="/customer-login" element={<CustomerLogin />} />
           <Route path="/vendor-login" element={<VendorLogin />} />
           <Route path="/office-panel" element={<OfficePanel />} />
