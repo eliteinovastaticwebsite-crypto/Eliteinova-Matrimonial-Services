@@ -11,9 +11,10 @@ import banner5 from '../assets/banner5.png';
 import photography from '../assets/photography.jpg';
 import catering from '../assets/catering.jpg';
 import weddinghalls from '../assets/weddinghalls.jpg';
-import decoration from '../assets/decoration.jpg'
-import invitation from '../assets/invitation.jpg'
-import makeup from '../assets/makeup.jpg'
+import decoration from '../assets/decoration.jpg';
+import invitation from '../assets/invitation.jpg';
+import makeup from '../assets/makeup.jpg';
+import entertainment from '../assets/entertainment.jpg';
 
 const Home = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -248,7 +249,7 @@ const Home = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=400&fit=crop" 
+                    src={entertainment}
                     alt="Entertainment & Events" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
