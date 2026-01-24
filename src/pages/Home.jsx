@@ -193,8 +193,9 @@ const Home = () => {
 </div>
 
           {/* Catering & Foods */}
+          {/* Catering & Foods */}
           <div className="flex flex-col items-center">
-            <a href="/catering" className="block group">
+            <Link to="/catering" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
@@ -204,7 +205,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-            </a>
+            </Link>
             <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Catering & Foods</h3>
             <p className="text-sm text-gray-600">products</p>
           </div>
