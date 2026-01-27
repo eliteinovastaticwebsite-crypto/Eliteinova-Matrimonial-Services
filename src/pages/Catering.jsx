@@ -7,6 +7,8 @@ import livecounter from '../assets/livecounter.jpg';
 import nonveg from '../assets/nonveg.jpg';
 import veg from '../assets/veg.jpg';
 import multicuisine from '../assets/multicuisine.jpg';
+import themebased from '../assets/themebased.jpg';
+import eventbased from '../assets/eventbased.jpg';
 
 const Catering = () => {
   return (
@@ -135,7 +137,7 @@ const Catering = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=400&fit=crop"
+                    src={themebased}
                     alt="Theme-Based Catering" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -151,7 +153,7 @@ const Catering = () => {
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=400&fit=crop"
+                    src={eventbased}
                     alt="Event-Based Catering" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />

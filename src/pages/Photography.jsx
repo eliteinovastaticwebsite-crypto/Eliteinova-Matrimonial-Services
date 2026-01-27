@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import album from '../assets/album.jpg';
 import kids from '../assets/kids.jpg';
 import videography from '../assets/videography.jpg';
@@ -7,24 +7,102 @@ import weddingphoto from '../assets/weddingphoto.jpg';
 import fashion from '../assets/fashion.jpg';
 import commercial from '../assets/commercial.jpg';
 import religious from '../assets/religious.jpg';
+import photobanner1 from '../assets/photobanner1.png';
+import photobanner2 from '../assets/photobanner2.png';
 
 const Photography = () => {
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+
+  const banners = [
+    {
+      id: 1,
+      image: photobanner1,
+      title: "Photography Services",
+      subtitle: "Capture Your Special Moments"
+    },
+    {
+      id: 2,
+      image: photobanner2,
+      title: "Professional Photography",
+      subtitle: "Timeless Memories Forever"
+    }
+  ];
+
+  // Auto change banner every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBannerIndex((prevIndex) => 
+        prevIndex === banners.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [banners.length]);
+
+  // Manual banner navigation
+  const goToBanner = (index) => {
+    setCurrentBannerIndex(index);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-yellow-50">
       {/* Banner Section */}
-      <section className="relative h-[400px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1920&h=400&fit=crop"
-          alt="Photography Banner"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold mb-4">Photography Services</h1>
-            <p className="text-xl">Capture Your Special Moments Forever</p>
+      <section className="relative h-[600px] overflow-hidden">
+        {/* Banner Images */}
+        {banners.map((banner, index) => (
+          <div
+            key={banner.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentBannerIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={banner.image}
+              alt={banner.title}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Light gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/5"></div>
           </div>
+        ))}
+
+        {/* Banner Navigation Dots */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+          {banners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToBanner(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentBannerIndex
+                  ? 'bg-yellow-500 w-8'
+                  : 'bg-white/70 hover:bg-white'
+              }`}
+              aria-label={`Go to banner ${index + 1}`}
+            />
+          ))}
         </div>
+
+        {/* Previous/Next Buttons */}
+        <button
+          onClick={() => goToBanner(currentBannerIndex === 0 ? banners.length - 1 : currentBannerIndex - 1)}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 p-3 rounded-full transition-all duration-300"
+          aria-label="Previous banner"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <button
+          onClick={() => goToBanner(currentBannerIndex === banners.length - 1 ? 0 : currentBannerIndex + 1)}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 p-3 rounded-full transition-all duration-300"
+          aria-label="Next banner"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </section>
 
       {/* Categories Section */}
