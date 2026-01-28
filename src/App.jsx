@@ -15,6 +15,11 @@ import Register from './pages/Register'; // You'll need to create this */}
 
 import Photography from './pages/Photography'; 
 import Catering from './pages/Catering';
+import WeddingHalls from './pages/WeddingHalls';
+import Decoration from './pages/Decoration';
+import Entertainment from './pages/Entertainment';
+import Invitation from './pages/Invitation';
+import Styling from './pages/Styling';
 
 function App() {
   return (
@@ -25,6 +30,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/photography" element={<Photography />} /> {/* Add this route */}
           <Route path="/catering" element={<Catering />} />
+          <Route path="/wedding-halls" element={<WeddingHalls />} />
+          <Route path="/decorations" element={<Decoration />} />
+          <Route path="/entertainment" element={<Entertainment />} />
+          <Route path="/invitation" element={<Invitation />} />
+          <Route path="/styling" element={<Styling />} />
          {/*} <Route path="/customer-login" element={<CustomerLogin />} />
           <Route path="/vendor-login" element={<VendorLogin />} />
           <Route path="/office-panel" element={<OfficePanel />} />

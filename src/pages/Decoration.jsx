@@ -1,62 +1,32 @@
-// Home.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import mandapdecor from '../assets/mandapdecor.jpg';
+import stagedecor from '../assets/stagedecor.jpg';
+import weddingdecor from '../assets/weddingdecor.jpg';
+import receptiondecor from '../assets/receptiondecor.jpg';
+import eventdecor from '../assets/eventdecor.jpg';
+import floraldecor from '../assets/floraldecor.jpg';
+import themedecor from '../assets/themedecor.jpg';
+import lightingdecor from '../assets/lightingdecor.jpg';
+// Unsplash fallback images
+const decorationbanner1 = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80";
+const decorationbanner2 = "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80";
 
-// Import banner images from assets
-import banner1 from '../assets/banner1.png';
-import banner2 from '../assets/banner2.png';
-import banner3 from '../assets/banner3.png';
-import banner4 from '../assets/banner4.png';
-import banner5 from '../assets/banner5.png';
-import photography from '../assets/photography.jpg';
-import catering from '../assets/catering.jpg';
-import weddinghalls from '../assets/weddinghalls.jpg';
-import decoration from '../assets/decoration.jpg';
-import invitation from '../assets/invitation.jpg';
-import makeup from '../assets/makeup.jpg';
-import entertainment from '../assets/entertainment.jpg';
-
-const Home = () => {
+const Decoration = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
-  // Banner images data - using local assets
   const banners = [
     {
       id: 1,
-      image: banner1,
-      title: "Find Your Perfect Match",
-      subtitle: "Join thousands of successful matches"
+      image: decorationbanner1,
+      title: "Wedding Decoration",
+      subtitle: "Transform Your Dreams into Reality"
     },
     {
       id: 2,
-      image: banner2,
-      title: "Trusted Matrimonial Services",
-      subtitle: "Over 10,000 happy marriages"
-    },
-    {
-      id: 3,
-      image: banner3,
-      title: "Secure & Private Profiles",
-      subtitle: "Your privacy is our priority"
-    },
-    {
-      id: 4,
-      image: banner4,
-      title: "Premium Membership Benefits",
-      subtitle: "Exclusive features for serious seekers"
-    },
-    {
-      id: 5,
-      image: banner5,
-      title: "Premium Membership Benefits",
-      subtitle: "Exclusive features for serious seekers"
-    },
-    /*{
-      id: 4,
-      image: banner4,
-      title: "Premium Membership Benefits",
-      subtitle: "Exclusive features for serious seekers"
-    }*/
+      image: decorationbanner2,
+      title: "Exquisite Decoration Services",
+      subtitle: "Create Magical Moments"
+    }
   ];
 
   // Auto change banner every 3 seconds
@@ -77,7 +47,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-yellow-50">
-      {/* Banner Section - Clean version without overlay text */}
+      {/* Banner Section */}
       <section className="relative h-[600px] overflow-hidden">
         {/* Banner Images */}
         {banners.map((banner, index) => (
@@ -90,15 +60,10 @@ const Home = () => {
             <img
               src={banner.image}
               alt={banner.title}
-              className="w-full h-full object-fill"
-              onError={(e) => {
-                e.target.onerror = null;
-                // Fallback if image fails to load
-                e.target.src = "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
-              }}
+              className="w-full h-full object-cover"
             />
             
-            {/* Light gradient overlay for better visibility (optional, can be removed too) */}
+            {/* Light gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/5"></div>
           </div>
         ))}
@@ -141,195 +106,156 @@ const Home = () => {
         </button>
       </section>
 
-      {/* Demo content to show the header in context */}
-      <main className="container mx-auto px-4 py-8 mt-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-red-800 mb-6">
-            Welcome to Eliteinova Matrimonial Services
-          </h2>
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <p className="text-gray-700 text-lg mb-4">
-              This is a demo page to showcase the header component with the requested red and yellow theme, Pacifico font for headings, and all the required menu items.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-              <div className="bg-gradient-to-br from-red-100 to-yellow-100 p-6 rounded-lg border border-red-200">
-                <h3 className="font-pacifico text-xl text-red-700 mb-2">Customer Login</h3>
-                <p className="text-gray-600">Access your matrimonial profile</p>
-              </div>
-              <div className="bg-gradient-to-br from-yellow-100 to-red-100 p-6 rounded-lg border border-yellow-200">
-                <h3 className="font-pacifico text-xl text-red-700 mb-2">Vendor Login</h3>
-                <p className="text-gray-600">Partner portal access</p>
-              </div>
-              <div className="bg-gradient-to-br from-red-100 to-yellow-100 p-6 rounded-lg border border-red-200">
-                <h3 className="font-pacifico text-xl text-red-700 mb-2">Help & Support</h3>
-                <p className="text-gray-600">Get assistance anytime</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-{/* Categories Section */}
+      {/* Categories Section */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold text-center text-red-800 mb-12">
-          Our Categories
+          Our Decoration Categories
         </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
-          {/* Photography */}
+          {/* Wedding Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/photography" className="block group">
+            <a href="/decoration/wedding-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={photography}
-                    alt="Photography" 
+                    src={weddingdecor}
+                    alt="Wedding Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Photography</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Wedding Decoration</h3>
           </div>
 
-          {/* Catering & Foods */}
+          {/* Stage Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/catering" className="block group">
+            <a href="/decoration/stage-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={catering}
-                    alt="Catering & Foods" 
+                    src={stagedecor}
+                    alt="Stage Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Catering & Foods</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Stage Decoration</h3>
           </div>
 
-          {/* Mandapam & Wedding Halls */}
+          {/* Mandap Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/wedding-halls" className="block group">
+            <a href="/decoration/mandap-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={weddinghalls}
-                    alt="Mandapam & Wedding Halls" 
+                    src={mandapdecor}
+                    alt="Mandap Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Mandapam & Wedding Halls</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Mandap Decoration</h3>
           </div>
 
-          {/* Decorations */}
+          {/* Reception Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/decorations" className="block group">
+            <a href="/decoration/reception-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={decoration}
-                    alt="Decorations" 
+                    src={receptiondecor}
+                    alt="Reception Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Decorations</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Reception Decoration</h3>
           </div>
 
-          {/* Entertainment & Events */}
+          {/* Event Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/entertainment" className="block group">
+            <a href="/decoration/event-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={entertainment}
-                    alt="Entertainment & Events" 
+                    src={eventdecor}
+                    alt="Event Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Entertainment & Events</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Event Decoration</h3>
           </div>
 
-          {/* Invitation & Gifts */}
+          {/* Floral Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/invitation" className="block group">
+            <a href="/decoration/floral-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={invitation}
-                    alt="Invitation & Gifts" 
+                    src={floraldecor}
+                    alt="Floral Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Invitation & Gifts</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Floral Decoration</h3>
           </div>
 
-          {/* Bridal and Groom Styling */}
+          {/* Theme-Based Decoration */}
           <div className="flex flex-col items-center">
-            <Link to="/styling" className="block group">
+            <a href="/decoration/theme-decoration" className="block group">
               <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src={makeup} 
-                    alt="Bridal & Groom Styling" 
+                    src={themedecor}
+                    alt="Theme-Based Decoration" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
-            </Link>
-            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Bridal & Groom Styling</h3>
-            <p className="text-sm text-gray-600">products</p>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Theme-Based Decoration</h3>
+          </div>
+
+          {/* Lighting & Ambience Decoration */}
+          <div className="flex flex-col items-center">
+            <a href="/decoration/lighting-decoration" className="block group">
+              <div className="w-44 h-44 rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300 p-1">
+                <div className="w-full h-full rounded-full overflow-hidden">
+                  <img 
+                    src={lightingdecor}
+                    alt="Lighting & Ambience Decoration" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </a>
+            <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg">Lighting & Ambience Decoration</h3>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Why Choose Us Section */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold text-center text-red-800 mb-8">
-          Why Choose Eliteinova?
+          Why Choose Our Decoration Services?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded-xl shadow-lg border border-red-100">
             <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full flex items-center justify-center mb-4 mx-auto">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
             </div>
-            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Verified Profiles</h3>
-            <p className="text-gray-600 text-center">All profiles are thoroughly verified for authenticity</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-yellow-100">
-            <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Privacy Protected</h3>
-            <p className="text-gray-600 text-center">Your data is secure with advanced encryption</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-xl shadow-lg border border-red-100">
-            <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Expert Matchmaking</h3>
-            <p className="text-gray-600 text-center">Professional assistance for perfect matches</p>
+            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Creative Designs</h3>
+            <p className="text-gray-600 text-center">Unique and innovative decoration concepts</p>
           </div>
           
           <div className="bg-white p-6 rounded-xl shadow-lg border border-yellow-100">
@@ -338,8 +264,28 @@ const Home = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">24/7 Support</h3>
-            <p className="text-gray-600 text-center">Round-the-clock customer support</p>
+            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Timely Setup</h3>
+            <p className="text-gray-600 text-center">Professional and punctual service delivery</p>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-red-100">
+            <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Expert Team</h3>
+            <p className="text-gray-600 text-center">Experienced decorators and designers</p>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-yellow-100">
+            <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+            </div>
+            <h3 className="font-bold text-lg text-red-700 mb-2 text-center">Premium Quality</h3>
+            <p className="text-gray-600 text-center">High-quality materials and craftsmanship</p>
           </div>
         </div>
       </section>
@@ -347,4 +293,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Decoration;
