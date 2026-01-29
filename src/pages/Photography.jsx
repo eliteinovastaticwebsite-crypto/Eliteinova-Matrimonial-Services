@@ -77,6 +77,276 @@ const Photography = () => {
   const states = ['Tamil Nadu', 'Kerala', 'Karnataka', 'Andhra Pradesh', 'Telangana'];
   const districts = ['Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Trichy'];
 
+  // Sample vendor data - 2 vendors for each event type
+  const vendors = [
+    // Wedding Photography Vendors
+    {
+      id: 1,
+      name: 'Capture Moments Studio',
+      businessName: 'Capture Moments Wedding Photography',
+      businessCategory: 'Wedding Photography',
+      eventType: 'Wedding Photography',
+      personName: 'Rajesh Kumar',
+      designation: 'Lead Photographer',
+      description: 'Specializing in candid wedding photography with 10+ years of experience',
+      services: ['Pre-wedding Shoots', 'Candid Photography', 'Traditional Wedding Coverage', 'Album Design'],
+      logo: weddingphoto,
+      location: 'Chennai, Tamil Nadu',
+      rating: 4.8,
+      priceRange: '₹50,000 - ₹2,00,000'
+    },
+    {
+      id: 2,
+      name: 'Evergreen Memories',
+      businessName: 'Evergreen Wedding Photography',
+      businessCategory: 'Wedding Photography',
+      eventType: 'Wedding Photography',
+      personName: 'Priya Sharma',
+      designation: 'Creative Director',
+      description: 'Documenting love stories with artistic vision and modern techniques',
+      services: ['Destination Weddings', 'Drone Photography', 'Cinematic Videos', 'Photo Booths'],
+      logo: weddingphoto,
+      location: 'Coimbatore, Tamil Nadu',
+      rating: 4.9,
+      priceRange: '₹75,000 - ₹3,00,000'
+    },
+    // Event Photography Vendors
+    {
+      id: 3,
+      name: 'Event Masters Pro',
+      businessName: 'Event Masters Photography',
+      businessCategory: 'Event Photography',
+      eventType: 'Event Photography',
+      personName: 'Arun Mehta',
+      designation: 'Event Photographer',
+      description: 'Professional event coverage for corporate and social events',
+      services: ['Corporate Events', 'Birthday Parties', 'Product Launches', 'Conferences'],
+      logo: event,
+      location: 'Bangalore, Karnataka',
+      rating: 4.7,
+      priceRange: '₹25,000 - ₹1,50,000'
+    },
+    {
+      id: 4,
+      name: 'Celebration Shots',
+      businessName: 'Celebration Photography Services',
+      businessCategory: 'Event Photography',
+      eventType: 'Event Photography',
+      personName: 'Sneha Reddy',
+      designation: 'Event Manager',
+      description: 'Capturing the essence of every celebration with precision',
+      services: ['Anniversary Events', 'Festival Celebrations', 'Award Functions', 'Social Gatherings'],
+      logo: event,
+      location: 'Hyderabad, Telangana',
+      rating: 4.6,
+      priceRange: '₹20,000 - ₹1,00,000'
+    },
+    // Videography Vendors
+    {
+      id: 5,
+      name: 'Motion Picture Studio',
+      businessName: 'Motion Picture Videography',
+      businessCategory: 'Videography',
+      eventType: 'Videography',
+      personName: 'Vikram Singh',
+      designation: 'Videography Director',
+      description: 'Creating cinematic wedding films and corporate videos',
+      services: ['Wedding Films', 'Corporate Videos', 'Documentaries', 'Promotional Videos'],
+      logo: videography,
+      location: 'Chennai, Tamil Nadu',
+      rating: 4.9,
+      priceRange: '₹1,00,000 - ₹5,00,000'
+    },
+    {
+      id: 6,
+      name: 'Visual Storytellers',
+      businessName: 'Visual Storytellers Studio',
+      businessCategory: 'Videography',
+      eventType: 'Videography',
+      personName: 'Anjali Nair',
+      designation: 'Creative Producer',
+      description: 'Story-driven video production for memorable occasions',
+      services: ['Short Films', 'Event Coverage', 'Music Videos', 'Animation Videos'],
+      logo: videography,
+      location: 'Kochi, Kerala',
+      rating: 4.8,
+      priceRange: '₹80,000 - ₹4,00,000'
+    },
+    // Editing & Album Services Vendors
+    {
+      id: 7,
+      name: 'Pixel Perfect Editing',
+      businessName: 'Pixel Perfect Photo Studio',
+      businessCategory: 'Editing & Album Services',
+      eventType: 'Editing & Album Services',
+      personName: 'Rahul Verma',
+      designation: 'Photo Editor',
+      description: 'Professional photo editing and custom album design services',
+      services: ['Photo Retouching', 'Album Design', 'Photo Restoration', 'Digital Artwork'],
+      logo: album,
+      location: 'Madurai, Tamil Nadu',
+      rating: 4.7,
+      priceRange: '₹10,000 - ₹50,000'
+    },
+    {
+      id: 8,
+      name: 'Memory Albums',
+      businessName: 'Memory Album Creators',
+      businessCategory: 'Editing & Album Services',
+      eventType: 'Editing & Album Services',
+      personName: 'Meera Patel',
+      designation: 'Album Designer',
+      description: 'Creating beautiful photo albums that tell your story',
+      services: ['Custom Albums', 'Photo Books', 'Digital Albums', 'Coffee Table Books'],
+      logo: album,
+      location: 'Ahmedabad, Gujarat',
+      rating: 4.6,
+      priceRange: '₹15,000 - ₹75,000'
+    },
+    // Fashion & Lifestyle Vendors
+    {
+      id: 9,
+      name: 'Style Frame Studio',
+      businessName: 'Style Frame Fashion Photography',
+      businessCategory: 'Fashion & Lifestyle',
+      eventType: 'Fashion & Lifestyle',
+      personName: 'Aisha Khan',
+      designation: 'Fashion Photographer',
+      description: 'Specializing in fashion editorial and lifestyle photography',
+      services: ['Fashion Shoots', 'Portfolio Photography', 'Lookbook Creation', 'Model Portfolios'],
+      logo: fashion,
+      location: 'Mumbai, Maharashtra',
+      rating: 4.9,
+      priceRange: '₹50,000 - ₹3,00,000'
+    },
+    {
+      id: 10,
+      name: 'Urban Lifestyle',
+      businessName: 'Urban Lifestyle Photography',
+      businessCategory: 'Fashion & Lifestyle',
+      eventType: 'Fashion & Lifestyle',
+      personName: 'Kabir Malhotra',
+      designation: 'Creative Director',
+      description: 'Contemporary lifestyle and urban photography',
+      services: ['Street Photography', 'Lifestyle Brands', 'E-commerce Photography', 'Personal Branding'],
+      logo: fashion,
+      location: 'Delhi, Delhi',
+      rating: 4.8,
+      priceRange: '₹40,000 - ₹2,50,000'
+    },
+    // Commercial Photography Vendors
+    {
+      id: 11,
+      name: 'Business Lens',
+      businessName: 'Business Lens Commercial Photography',
+      businessCategory: 'Commercial Photography',
+      eventType: 'Commercial Photography',
+      personName: 'Sanjay Gupta',
+      designation: 'Commercial Photographer',
+      description: 'Professional commercial photography for businesses',
+      services: ['Product Photography', 'Architecture', 'Food Photography', 'Corporate Headshots'],
+      logo: commercial,
+      location: 'Bangalore, Karnataka',
+      rating: 4.7,
+      priceRange: '₹30,000 - ₹2,00,000'
+    },
+    {
+      id: 12,
+      name: 'Brand Visuals',
+      businessName: 'Brand Visuals Studio',
+      businessCategory: 'Commercial Photography',
+      eventType: 'Commercial Photography',
+      personName: 'Neha Joshi',
+      designation: 'Brand Photographer',
+      description: 'Creating compelling visual content for brands',
+      services: ['Brand Campaigns', 'Advertising Photography', 'Packaging Shots', 'Corporate Events'],
+      logo: commercial,
+      location: 'Pune, Maharashtra',
+      rating: 4.8,
+      priceRange: '₹50,000 - ₹3,00,000'
+    },
+    // Religious & Cultural Photography Vendors
+    {
+      id: 13,
+      name: 'Cultural Heritage',
+      businessName: 'Cultural Heritage Photography',
+      businessCategory: 'Religious & Cultural',
+      eventType: 'Religious & Cultural Photography',
+      personName: 'Venkatesh Iyer',
+      designation: 'Cultural Photographer',
+      description: 'Documenting religious ceremonies and cultural events',
+      services: ['Temple Festivals', 'Religious Ceremonies', 'Cultural Events', 'Traditional Rituals'],
+      logo: religious,
+      location: 'Chennai, Tamil Nadu',
+      rating: 4.9,
+      priceRange: '₹25,000 - ₹1,50,000'
+    },
+    {
+      id: 14,
+      name: 'Divine Moments',
+      businessName: 'Divine Moments Photography',
+      businessCategory: 'Religious & Cultural',
+      eventType: 'Religious & Cultural Photography',
+      personName: 'Radha Krishnan',
+      designation: 'Religious Event Specialist',
+      description: 'Specializing in religious event photography with respect and devotion',
+      services: ['Pujas', 'Religious Processions', 'Temple Events', 'Spiritual Gatherings'],
+      logo: religious,
+      location: 'Kanyakumari, Tamil Nadu',
+      rating: 4.8,
+      priceRange: '₹20,000 - ₹1,00,000'
+    },
+    // Kids & Special Shoots Vendors
+    {
+      id: 15,
+      name: 'Little Angels',
+      businessName: 'Little Angels Photography',
+      businessCategory: 'Kids & Special Shoots',
+      eventType: 'Kids & Special Shoots',
+      personName: 'Pooja Mehta',
+      designation: 'Children Photographer',
+      description: 'Creating magical memories for children and families',
+      services: ['Newborn Photography', 'Birthday Shoots', 'Family Portraits', 'Baby Showers'],
+      logo: kids,
+      location: 'Chennai, Tamil Nadu',
+      rating: 4.9,
+      priceRange: '₹15,000 - ₹80,000'
+    },
+    {
+      id: 16,
+      name: 'Special Moments',
+      businessName: 'Special Moments Studio',
+      businessCategory: 'Kids & Special Shoots',
+      eventType: 'Kids & Special Shoots',
+      personName: 'David Wilson',
+      designation: 'Special Shoots Director',
+      description: 'Specialized photography for unique occasions and celebrations',
+      services: ['Maternity Shoots', 'Pet Photography', 'Anniversary Shoots', 'Surprise Events'],
+      logo: kids,
+      location: 'Coimbatore, Tamil Nadu',
+      rating: 4.7,
+      priceRange: '₹20,000 - ₹1,00,000'
+    }
+  ];
+
+  // Filter vendors based on selections
+  const filteredVendors = vendors.filter(vendor => {
+    if (selectedEvent && vendor.eventType !== selectedEvent) return false;
+    if (selectedState && !vendor.location.includes(selectedState)) return false;
+    if (selectedDistrict && !vendor.location.includes(selectedDistrict)) return false;
+    if (selectedLocation && !vendor.location.toLowerCase().includes(selectedLocation.toLowerCase())) return false;
+    
+    // Budget filter logic (simplified)
+    if (minBudget || maxBudget) {
+      const minPrice = parseInt(minBudget) || 0;
+      const maxPrice = parseInt(maxBudget) || Infinity;
+      const vendorPrice = parseInt(vendor.priceRange.replace(/[^0-9]/g, '').split('-')[0]) || 0;
+      return vendorPrice >= minPrice && vendorPrice <= maxPrice;
+    }
+    
+    return true;
+  });
+
   // Auto change banner every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -93,8 +363,8 @@ const Photography = () => {
   };
 
   const handleFilter = () => {
-    // Filter logic here
-    console.log('Filtering...');
+    // Filter logic already handled by filteredVendors
+    console.log('Filtering...', filteredVendors.length);
   };
 
   const handleReset = () => {
@@ -161,27 +431,27 @@ const Photography = () => {
         </button>
       </section>
 
-      {/* Main Categories Navigation */}
-      <div className="sticky top-0 z-50 bg-gradient-to-r from-red-600 to-red-700 shadow-xl py-6">
+      {/* Main Categories Navigation - IMPROVED WITH THIN BORDER */}
+      <div className="sticky top-0 z-50 bg-gradient-to-r from-red-600 to-red-700 shadow-xl py-8">
         <div className="container mx-auto px-4">
-          <h3 className="text-white text-xl font-bold mb-4 text-center">
+          <h3 className="text-white text-2xl font-bold mb-6 text-center">
             Browse All Wedding Services
           </h3>
-          <div className="flex items-center justify-between overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex items-center justify-center overflow-x-auto pb-3 scrollbar-hide space-x-10">
             {mainCategories.map((category) => (
               <Link
                 key={category.name}
                 to={category.path}
-                className="flex flex-col items-center transition-all duration-300 hover:scale-110 flex-shrink-0 w-24"
+                className="flex flex-col items-center transition-all duration-300 hover:scale-110 flex-shrink-0 min-w-[100px]"
               >
-                <div className="w-20 h-20 rounded-full border-4 border-yellow-400 overflow-hidden bg-white p-1 mb-3 shadow-lg">
+                <div className="w-28 h-28 rounded-full border border-yellow-300 overflow-hidden bg-white mb-4 shadow-xl">
                   <img 
                     src={category.image}
                     alt={category.name} 
-                    className="w-full h-full object-cover rounded-full"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-sm font-semibold text-white text-center leading-tight">
+                <span className="text-base font-bold text-white text-center leading-tight px-1">
                   {category.name}
                 </span>
               </Link>
@@ -195,32 +465,155 @@ const Photography = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content Area */}
           <div className="lg:flex-1">
-            {/* Photography Categories Grid */}
+            {/* Photography Categories Grid - COMPACT SIZE */}
             <section className="py-4">
-              <h2 className="text-3xl font-bold text-center text-red-800 mb-12">
+              <h2 className="text-2xl font-bold text-center text-red-800 mb-8">
                 Our Photography Categories
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {photographyCategories.map((category) => (
                   <div key={category.name} className="flex flex-col items-center group">
                     <Link 
                       to={category.path}
-                      className="relative block w-full aspect-square max-w-[220px] mx-auto"
+                      className="relative block w-full aspect-square max-w-[150px] mx-auto"
                     >
-                      <div className="w-full h-full rounded-full border-[5px] border-amber-800 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                      <div className="w-full h-full rounded-full border-2 border-amber-700 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-md hover:shadow-lg transition-all duration-300">
                         <img 
                           src={category.image}
                           alt={category.name} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                         />
                       </div>
                     </Link>
-                    <h3 className="mt-4 text-center font-semibold text-gray-800 text-lg px-2">
+                    <h3 className="mt-2 text-center font-medium text-gray-800 text-sm px-1">
                       {category.name}
                     </h3>
                   </div>
                 ))}
               </div>
+            </section>
+
+            {/* Vendor Count and Filter Results Section */}
+            <section className="py-8">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-xl shadow-lg p-6 mb-6">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <div className="text-center md:text-left mb-4 md:mb-0">
+                    <h3 className="text-2xl font-bold text-white">
+                      {selectedEvent ? `${filteredVendors.length} ${selectedEvent} Vendors Available` : '16 Photography Vendors Available'}
+                    </h3>
+                    <p className="text-yellow-200 mt-2">
+                      {selectedEvent ? `Showing results for "${selectedEvent}"` : 'Browse our professional photography vendors'}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-white/20 px-4 py-2 rounded-lg">
+                      <span className="text-white font-semibold">Price Range:</span>
+                      <span className="text-yellow-300 ml-2">₹5,000 - ₹5,00,000</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Vendor Profiles */}
+              {filteredVendors.length > 0 ? (
+                <div className="space-y-6">
+                  {filteredVendors.map((vendor) => (
+                    <div key={vendor.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                      <div className="flex flex-col md:flex-row">
+                        {/* Left Section - Logo */}
+                        <div className="md:w-1/4 p-6 flex flex-col items-center justify-center bg-gradient-to-br from-red-50 to-yellow-50">
+                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
+                            <img 
+                              src={vendor.logo} 
+                              alt={vendor.businessName} 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="text-center">
+                            <div className="flex items-center justify-center mb-2">
+                              <div className="flex items-center bg-yellow-100 px-3 py-1 rounded-full">
+                                <span className="text-yellow-700 font-bold mr-1">{vendor.rating}</span>
+                                <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              </div>
+                            </div>
+                            <p className="text-red-700 font-bold">{vendor.priceRange}</p>
+                          </div>
+                        </div>
+
+                        {/* Middle Section - Business Details */}
+                        <div className="md:w-2/4 p-6 border-r border-gray-100">
+                          <div className="mb-4">
+                            <h3 className="text-xl font-bold text-red-800 mb-1">{vendor.businessName}</h3>
+                            <div className="flex items-center space-x-4 mb-3">
+                              <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                                {vendor.businessCategory}
+                              </span>
+                              <span className="text-gray-600 flex items-center">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                {vendor.location}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-gray-700 mb-4">{vendor.description}</p>
+                          
+                          <div className="space-y-2">
+                            <div className="flex items-center">
+                              <span className="text-gray-600 w-32">Contact Person:</span>
+                              <span className="font-medium text-gray-800">{vendor.personName}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-600 w-32">Designation:</span>
+                              <span className="font-medium text-gray-800">{vendor.designation}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Section - Services */}
+                        <div className="md:w-1/4 p-6">
+                          <h4 className="font-bold text-red-700 mb-4 text-lg">Services Offered</h4>
+                          <ul className="space-y-2 mb-6">
+                            {vendor.services.map((service, index) => (
+                              <li key={index} className="flex items-center">
+                                <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span className="text-gray-700">{service}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          
+                          <button className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+                            <span>View Details</span>
+                            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl shadow-lg p-12 text-center">
+                  <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <h3 className="text-2xl font-bold text-gray-700 mb-2">No Vendors Found</h3>
+                  <p className="text-gray-600 mb-6">Try adjusting your filter criteria to find more vendors</p>
+                  <button 
+                    onClick={handleReset}
+                    className="bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-6 rounded-lg font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    Reset Filters
+                  </button>
+                </div>
+              )}
             </section>
 
             {/* Why Choose Us Section */}
@@ -309,7 +702,7 @@ const Photography = () => {
                   onChange={(e) => setSelectedEvent(e.target.value)}
                   className="w-full px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
-                  <option value="">Select Event Type</option>
+                  <option value="">All Event Types</option>
                   {eventTypes.map((event) => (
                     <option key={event} value={event}>{event}</option>
                   ))}
@@ -324,7 +717,7 @@ const Photography = () => {
                   onChange={(e) => setSelectedState(e.target.value)}
                   className="w-full px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
-                  <option value="">Select State</option>
+                  <option value="">All States</option>
                   {states.map((state) => (
                     <option key={state} value={state}>{state}</option>
                   ))}
@@ -339,7 +732,7 @@ const Photography = () => {
                   onChange={(e) => setSelectedDistrict(e.target.value)}
                   className="w-full px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
-                  <option value="">Select District</option>
+                  <option value="">All Districts</option>
                   {districts.map((district) => (
                     <option key={district} value={district}>{district}</option>
                   ))}
