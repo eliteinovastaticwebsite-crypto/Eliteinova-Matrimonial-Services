@@ -138,18 +138,18 @@ const Header = ({ onOpenVendorForm }) => {
     }
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (itemName) => {
     if (window.innerWidth >= 1024) {
-      // Small delay to allow moving to dropdown
+      // Only hide if not hovering over dropdown
       setTimeout(() => {
-        if (activeDropdown) {
-          const isCustomerActive = activeDropdown === 'CUSTOMER LOGIN' && !dropdownRef.current?.contains(document.activeElement);
-          const isVendorActive = activeDropdown === 'VENDOR LOGIN' && !vendorDropdownRef.current?.contains(document.activeElement);
-          if (isCustomerActive || isVendorActive) {
+        if (activeDropdown === itemName) {
+          const dropdownElement = itemName === 'CUSTOMER LOGIN' ? dropdownRef.current : vendorDropdownRef.current;
+          if (!dropdownElement?.contains(document.activeElement) && 
+              !dropdownElement?.matches(':hover')) {
             setActiveDropdown(null);
           }
         }
-      }, 150);
+      }, 300); // Increased delay for better UX
     }
   };
 
@@ -166,11 +166,12 @@ const Header = ({ onOpenVendorForm }) => {
   const handleDropdownMouseLeave = (dropdownType) => {
     if (window.innerWidth >= 1024) {
       setTimeout(() => {
-        if ((dropdownType === 'customer' && activeDropdown === 'CUSTOMER LOGIN') ||
-            (dropdownType === 'vendor' && activeDropdown === 'VENDOR LOGIN')) {
+        const mainButton = document.querySelector(`button:contains("${dropdownType === 'customer' ? 'CUSTOMER LOGIN' : 'VENDOR LOGIN'}")`);
+        if (!mainButton?.matches(':hover') && 
+            !(dropdownType === 'customer' ? dropdownRef.current : vendorDropdownRef.current)?.matches(':hover')) {
           setActiveDropdown(null);
         }
-      }, 150);
+      }, 300); // Increased delay for better UX
     }
   };
 
@@ -198,6 +199,39 @@ const Header = ({ onOpenVendorForm }) => {
   const getDropdownRef = (dropdownType) => {
     return dropdownType === 'customer' ? dropdownRef : vendorDropdownRef;
   };
+
+  // Custom hover detection
+  useEffect(() => {
+    const handleGlobalMouseMove = (event) => {
+      if (window.innerWidth >= 1024) {
+        if (activeDropdown) {
+          const dropdownElement = activeDropdown === 'CUSTOMER LOGIN' ? dropdownRef.current : vendorDropdownRef.current;
+          const mainButton = document.querySelector(`button:contains("${activeDropdown}")`);
+          
+          // Check if mouse is over dropdown or main button
+          const isOverDropdown = dropdownElement?.contains(event.target);
+          const isOverButton = mainButton?.contains(event.target);
+          
+          // If mouse is not over either, close dropdown after delay
+          if (!isOverDropdown && !isOverButton) {
+            setTimeout(() => {
+              if (!dropdownElement?.contains(document.activeElement) && 
+                  !mainButton?.contains(document.activeElement)) {
+                setActiveDropdown(null);
+              }
+            }, 300);
+          }
+        }
+      }
+    };
+
+    if (window.innerWidth >= 1024) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      return () => {
+        document.removeEventListener('mousemove', handleGlobalMouseMove);
+      };
+    }
+  }, [activeDropdown]);
 
   return (
     <header className="sticky top-0 z-50 shadow-lg w-full">
@@ -285,9 +319,9 @@ const Header = ({ onOpenVendorForm }) => {
               {menuItems.map((item) => (
                 <div 
                   key={item.name} 
-                  className="relative h-full"
+                  className="relative h-full group"
                   onMouseEnter={() => handleMouseEnter(item.name)}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseLeave={() => handleMouseLeave(item.name)}
                 >
                   {item.hasDropdown ? (
                     <div 
@@ -509,6 +543,11 @@ const Header = ({ onOpenVendorForm }) => {
         }
         .animate-dropdown-slide {
           animation: dropdown-slide 0.2s ease-out forwards;
+        }
+        
+        /* Ensure dropdown stays open when hovering over it */
+        .group:hover .dropdown-content {
+          display: block;
         }
       `}</style>
     </header>

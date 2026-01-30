@@ -381,10 +381,10 @@ const Photography = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-yellow-50">
-      {/* Banner Section - OPTIMIZED FOR ALL SCREENS */}
+      {/* Banner Section - FULL WIDTH ON MOBILE */}
       <section className="relative w-full overflow-hidden">
-        {/* Responsive height - matches home page */}
-        <div className="relative h-[35vh] min-h-[250px] sm:h-[40vh] md:h-[45vh] lg:h-[600px]">
+        {/* Responsive height - Full width on mobile, matches home page on desktop */}
+        <div className="relative h-[35vh] min-h-[250px] sm:h-[40vh] md:h-[45vh] lg:h-[600px] w-full">
           {/* Banner Images - Optimized for mobile quality */}
           {banners.map((banner, index) => (
             <div
@@ -393,12 +393,12 @@ const Photography = () => {
                 index === currentBannerIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
             >
-              {/* Image Container with optimized rendering */}
+              {/* Image Container with optimized rendering - FULL WIDTH ON MOBILE */}
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-red-500/5 to-yellow-500/5">
                 <img
                   src={banner.image}
                   alt={banner.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover md:object-cover object-contain"
                   style={{
                     objectPosition: 'center center',
                     // Optimized for mobile rendering
@@ -407,9 +407,6 @@ const Photography = () => {
                     // Ensure sharp edges on mobile
                     WebkitFontSmoothing: 'antialiased',
                     MozOsxFontSmoothing: 'grayscale',
-                    // Force GPU rendering for better quality
-                    transform: 'translateZ(0)',
-                    backfaceVisibility: 'hidden',
                   }}
                 />
               </div>
@@ -480,7 +477,7 @@ const Photography = () => {
             className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-4 rounded-lg font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4z" />
             </svg>
             <span>{showMobileFilter ? 'Hide Filters' : 'Show Filters'}</span>
             <svg className={`w-5 h-5 ml-2 transition-transform duration-300 ${showMobileFilter ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
