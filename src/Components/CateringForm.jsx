@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, Utensils, ChefHat, Users, Banknote, X } from "lucide-react";
+import { ArrowLeft, Utensils, ChefHat, Users, Banknote, X, Pen } from "lucide-react";
 
 // Form steps based on catering details
 const steps = [
@@ -68,6 +68,8 @@ const locations = [
 
 export default function CateringVendorModal({ isOpen, onClose }) {
   const [step, setStep] = useState(0);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const canvasRef = React.useRef(null);
   const [formData, setFormData] = useState({
     // Step 1
     vendorName: "",
@@ -156,6 +158,51 @@ export default function CateringVendorModal({ isOpen, onClose }) {
     });
   };
 
+  const startDrawing = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    setIsDrawing(true);
+  };
+
+  const draw = (e) => {
+    if (!isDrawing) return;
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = '#991B1B';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+  };
+
+  const stopDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const clearSignature = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
   const handleSubmit = () => {
     console.log("Catering form submitted:", formData);
     alert("Catering Registration submitted successfully!");
@@ -164,7 +211,8 @@ export default function CateringVendorModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-gradient-to-b from-red-50 to-yellow-50 w-full max-w-md lg:max-w-lg rounded-xl shadow-2xl flex flex-col max-h-[95vh] sm:max-h-[90vh] lg:max-h-[90vh] border border-red-200">
+      {/* Reduced width for desktop */}
+      <div className="bg-gradient-to-b from-red-50 to-yellow-50 w-full max-w-lg rounded-xl shadow-2xl flex flex-col max-h-[95vh] sm:max-h-[90vh] lg:max-h-[90vh] border border-red-200">
 
         {/* Top Bar */}
         <div className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 rounded-t-xl flex items-center gap-3 px-4 py-3 sm:py-3 shrink-0">
@@ -213,308 +261,355 @@ export default function CateringVendorModal({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* SCROLLABLE CONTENT */}
-        <div className="px-4 py-3 sm:py-4 space-y-3 overflow-y-auto flex-1">
-
+        {/* SCROLLABLE CONTENT - Improved layout */}
+        <div className="px-4 py-4 sm:py-5 space-y-4 overflow-y-auto flex-1">
           {/* STEP 1: Vendor Details */}
           {step === 0 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                <Utensils className="inline w-4 h-4 mr-2" />
-                Vendor Basic Details
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm flex items-center justify-center">
+                  <Utensils className="inline w-4 h-4 mr-2" />
+                  Vendor Basic Details
+                </h3>
+              </div>
               
-              <input 
-                name="vendorName"
-                value={formData.vendorName}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Catering Company / Vendor Name *" 
-              />
+              <div className="form-group">
+                <label className="form-label">Catering Company / Vendor Name *</label>
+                <input 
+                  name="vendorName"
+                  value={formData.vendorName}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter catering company or vendor name" 
+                />
+              </div>
               
-              <input 
-                name="proprietorName"
-                value={formData.proprietorName}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Proprietor / Contact Person Name *" 
-              />
+              <div className="form-group">
+                <label className="form-label">Proprietor / Contact Person Name *</label>
+                <input 
+                  name="proprietorName"
+                  value={formData.proprietorName}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter proprietor or contact person name" 
+                />
+              </div>
               
-              <p className="text-sm font-semibold text-red-800 mb-2">
-                Type of Catering: *
-              </p>
-              
-              <div className="space-y-2 pl-2">
-                <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
-                  {cateringTypes.map(type => (
-                    <label key={type} className="flex items-center gap-2 text-xs">
-                      <input 
-                        type="checkbox" 
-                        checked={formData.selectedCateringTypes.includes(type)}
-                        onChange={() => handleArrayToggle('selectedCateringTypes', type)}
-                        className="w-3.5 h-3.5 accent-red-600" 
-                      /> 
-                      <span className="truncate">{type}</span>
-                    </label>
-                  ))}
-                </div>
-                
-                <div className="flex items-center gap-2 mt-3">
-                  <label className="text-xs font-semibold">Other:</label>
-                  <input 
-                    name="otherCateringType"
-                    value={formData.otherCateringType}
-                    onChange={handleInputChange}
-                    className="input-field text-sm flex-1" 
-                    placeholder="Specify other catering type" 
-                  />
+              <div className="form-group">
+                <label className="form-label">Type of Catering *</label>
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    {cateringTypes.map(type => (
+                      <label key={type} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                        <input 
+                          type="checkbox" 
+                          checked={formData.selectedCateringTypes.includes(type)}
+                          onChange={() => handleArrayToggle('selectedCateringTypes', type)}
+                          className="w-3.5 h-3.5 accent-red-600" 
+                        /> 
+                        <span className="text-gray-700">{type}</span>
+                      </label>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center gap-2 mt-3">
+                    <label className="text-xs font-semibold text-red-700 whitespace-nowrap">Other:</label>
+                    <input 
+                      name="otherCateringType"
+                      value={formData.otherCateringType}
+                      onChange={handleInputChange}
+                      className="input-field flex-1 text-sm" 
+                      placeholder="Specify other catering type" 
+                    />
+                  </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* STEP 2: Contact Information */}
           {step === 1 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Contact Information
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Contact Information
+                </h3>
+              </div>
               
-              <input 
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Mobile Number *" 
-                type="tel"
-              />
-              
-              <input 
-                name="alternateMobile"
-                value={formData.alternateMobile}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Alternate Mobile Number" 
-                type="tel"
-              />
-              
-              <input 
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Email ID *" 
-                type="email"
-              />
-              
-              <input 
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Office Address *" 
-              />
-              
-              <div className="grid grid-cols-2 gap-2">
+              <div className="form-group">
+                <label className="form-label">Mobile Number *</label>
                 <input 
-                  name="city"
-                  value={formData.city}
+                  name="mobile"
+                  value={formData.mobile}
                   onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="City / District *" 
-                />
-                <input 
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="State *" 
+                  className="input-field" 
+                  placeholder="Enter mobile number" 
+                  type="tel"
                 />
               </div>
               
-              <input 
-                name="pincode"
-                value={formData.pincode}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="PIN Code *" 
-              />
-            </>
+              <div className="form-group">
+                <label className="form-label">Alternate Mobile Number</label>
+                <input 
+                  name="alternateMobile"
+                  value={formData.alternateMobile}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter alternate mobile number" 
+                  type="tel"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Email ID *</label>
+                <input 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter email address" 
+                  type="email"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Office Address *</label>
+                <input 
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter office address" 
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">City / District *</label>
+                  <input 
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter city" 
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">State *</label>
+                  <input 
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter state" 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">PIN Code *</label>
+                <input 
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter PIN code" 
+                />
+              </div>
+            </div>
           )}
 
           {/* STEP 3: Business & Legal Details */}
           {step === 2 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Business & Legal Details
-              </h3>
-              
-              <p className="text-sm font-semibold text-red-800 mb-2">
-                Business Type: *
-              </p>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
-                {businessTypes.map(type => (
-                  <label key={type} className="flex items-center gap-2 text-xs">
-                    <input 
-                      type="radio" 
-                      name="businessType" 
-                      value={type}
-                      checked={formData.businessType === type}
-                      onChange={handleInputChange}
-                      className="w-3.5 h-3.5 accent-red-600" 
-                    /> 
-                    {type}
-                  </label>
-                ))}
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Business & Legal Details
+                </h3>
               </div>
               
-              <input 
-                name="gstNumber"
-                value={formData.gstNumber}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="GST Number (if applicable)" 
-              />
+              <div className="form-group">
+                <label className="form-label">Business Type *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {businessTypes.map(type => (
+                    <label key={type} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                      <input 
+                        type="radio" 
+                        name="businessType" 
+                        value={type}
+                        checked={formData.businessType === type}
+                        onChange={handleInputChange}
+                        className="w-3.5 h-3.5 accent-red-600" 
+                      /> 
+                      <span className="text-gray-700">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
               
-              <input 
-                name="panNumber"
-                value={formData.panNumber}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="PAN Number *" 
-              />
+              <div className="form-group">
+                <label className="form-label">GST Number (if applicable)</label>
+                <input 
+                  name="gstNumber"
+                  value={formData.gstNumber}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter GST number" 
+                />
+              </div>
               
-              <input 
-                name="fssaiNumber"
-                value={formData.fssaiNumber}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="FSSAI License Number *" 
-              />
+              <div className="form-group">
+                <label className="form-label">PAN Number *</label>
+                <input 
+                  name="panNumber"
+                  value={formData.panNumber}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter PAN number" 
+                />
+              </div>
               
-              <input 
-                name="experience"
-                value={formData.experience}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Years of Experience *" 
-                type="number"
-              />
-            </>
+              <div className="form-group">
+                <label className="form-label">FSSAI License Number *</label>
+                <input 
+                  name="fssaiNumber"
+                  value={formData.fssaiNumber}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter FSSAI license number" 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Years of Experience *</label>
+                <input 
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter years of experience" 
+                  type="number"
+                />
+              </div>
+            </div>
           )}
 
           {/* STEP 4: Cuisine & Menu Details */}
           {step === 3 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                <ChefHat className="inline w-4 h-4 mr-2" />
-                Cuisine & Menu Details
-              </h3>
-              
-              <p className="text-sm font-semibold text-red-800 mb-2">
-                Cuisines Offered: *
-              </p>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 pl-2 mb-4">
-                {cuisines.map(cuisine => (
-                  <label key={cuisine} className="flex items-center gap-2 text-xs">
-                    <input 
-                      type="checkbox" 
-                      checked={formData.selectedCuisines.includes(cuisine)}
-                      onChange={() => handleArrayToggle('selectedCuisines', cuisine)}
-                      className="w-3.5 h-3.5 accent-red-600" 
-                    /> 
-                    {cuisine}
-                  </label>
-                ))}
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm flex items-center justify-center">
+                  <ChefHat className="inline w-4 h-4 mr-2" />
+                  Cuisine & Menu Details
+                </h3>
               </div>
               
-              <div className="flex items-center gap-2 mb-4">
-                <label className="text-xs font-semibold">Other Cuisine:</label>
+              <div className="form-group">
+                <label className="form-label">Cuisines Offered *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {cuisines.map(cuisine => (
+                    <label key={cuisine} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                      <input 
+                        type="checkbox" 
+                        checked={formData.selectedCuisines.includes(cuisine)}
+                        onChange={() => handleArrayToggle('selectedCuisines', cuisine)}
+                        className="w-3.5 h-3.5 accent-red-600" 
+                      /> 
+                      <span className="text-gray-700">{cuisine}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Other Cuisine</label>
                 <input 
                   name="otherCuisine"
                   value={formData.otherCuisine}
                   onChange={handleInputChange}
-                  className="input-field text-sm flex-1" 
+                  className="input-field" 
                   placeholder="Specify other cuisine" 
                 />
               </div>
               
-              <p className="text-sm font-semibold text-red-800 mb-2">
-                Special Menus Available: *
-              </p>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 pl-2">
-                {specialMenus.map(menu => (
-                  <label key={menu} className="flex items-center gap-2 text-xs">
-                    <input 
-                      type="checkbox" 
-                      checked={formData.selectedSpecialMenus.includes(menu)}
-                      onChange={() => handleArrayToggle('selectedSpecialMenus', menu)}
-                      className="w-3.5 h-3.5 accent-red-600" 
-                    /> 
-                    {menu}
-                  </label>
-                ))}
+              <div className="form-group">
+                <label className="form-label">Special Menus Available *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {specialMenus.map(menu => (
+                    <label key={menu} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                      <input 
+                        type="checkbox" 
+                        checked={formData.selectedSpecialMenus.includes(menu)}
+                        onChange={() => handleArrayToggle('selectedSpecialMenus', menu)}
+                        className="w-3.5 h-3.5 accent-red-600" 
+                      /> 
+                      <span className="text-gray-700">{menu}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* STEP 5: Capacity & Service Details */}
           {step === 4 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                <Users className="inline w-4 h-4 mr-2" />
-                Capacity & Service Details
-              </h3>
-              
-              <div className="grid grid-cols-2 gap-2">
-                <input 
-                  name="minCapacity"
-                  value={formData.minCapacity}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Minimum Plate Capacity *" 
-                  type="number"
-                />
-                <input 
-                  name="maxCapacity"
-                  value={formData.maxCapacity}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Maximum Plate Capacity *" 
-                  type="number"
-                />
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm flex items-center justify-center">
+                  <Users className="inline w-4 h-4 mr-2" />
+                  Capacity & Service Details
+                </h3>
               </div>
               
-              <p className="text-sm font-semibold text-red-800 mt-3 mb-2">
-                Service Type: *
-              </p>
-              
-              <div className="flex flex-wrap gap-3 pl-2">
-                {serviceTypes.map(type => (
-                  <label key={type} className="flex items-center gap-2 text-xs">
-                    <input 
-                      type="radio" 
-                      name="selectedServiceType" 
-                      value={type}
-                      checked={formData.selectedServiceType === type}
-                      onChange={handleInputChange}
-                      className="w-3.5 h-3.5 accent-red-600" 
-                    /> 
-                    {type}
-                  </label>
-                ))}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">Minimum Plate Capacity *</label>
+                  <input 
+                    name="minCapacity"
+                    value={formData.minCapacity}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter minimum capacity" 
+                    type="number"
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Maximum Plate Capacity *</label>
+                  <input 
+                    name="maxCapacity"
+                    value={formData.maxCapacity}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter maximum capacity" 
+                    type="number"
+                  />
+                </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                  <p className="text-sm font-semibold text-red-800 mb-2">
-                    Serving Staff Provided: *
-                  </p>
-                  <div className="flex gap-3 pl-2">
-                    <label className="flex items-center gap-2 text-xs">
+              <div className="form-group">
+                <label className="form-label">Service Type *</label>
+                <div className="flex flex-wrap gap-3">
+                  {serviceTypes.map(type => (
+                    <label key={type} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                      <input 
+                        type="radio" 
+                        name="selectedServiceType" 
+                        value={type}
+                        checked={formData.selectedServiceType === type}
+                        onChange={handleInputChange}
+                        className="w-3.5 h-3.5 accent-red-600" 
+                      /> 
+                      <span className="text-gray-700">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">Serving Staff Provided *</label>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasServingStaff" 
@@ -523,9 +618,9 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      Yes
+                      <span className="text-gray-700">Yes</span>
                     </label>
-                    <label className="flex items-center gap-2 text-xs">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasServingStaff" 
@@ -534,17 +629,15 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      No
+                      <span className="text-gray-700">No</span>
                     </label>
                   </div>
                 </div>
                 
-                <div>
-                  <p className="text-sm font-semibold text-red-800 mb-2">
-                    Uniformed Staff: *
-                  </p>
-                  <div className="flex gap-3 pl-2">
-                    <label className="flex items-center gap-2 text-xs">
+                <div className="form-group">
+                  <label className="form-label">Uniformed Staff *</label>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasUniformedStaff" 
@@ -553,9 +646,9 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      Yes
+                      <span className="text-gray-700">Yes</span>
                     </label>
-                    <label className="flex items-center gap-2 text-xs">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasUniformedStaff" 
@@ -564,45 +657,51 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      No
+                      <span className="text-gray-700">No</span>
                     </label>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* STEP 6: Pricing Details */}
           {step === 5 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                <Banknote className="inline w-4 h-4 mr-2" />
-                Pricing Details
-              </h3>
-              
-              <div className="grid grid-cols-2 gap-2">
-                <input 
-                  name="minPrice"
-                  value={formData.minPrice}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Min Price per Plate (₹)" 
-                />
-                <input 
-                  name="maxPrice"
-                  value={formData.maxPrice}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Max Price per Plate (₹)" 
-                />
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm flex items-center justify-center">
+                  <Banknote className="inline w-4 h-4 mr-2" />
+                  Pricing Details
+                </h3>
               </div>
               
-              <div className="mt-3">
-                <p className="text-sm font-semibold text-red-800 mb-2">
-                  Advance Payment Required: *
-                </p>
-                <div className="flex gap-4 pl-2">
-                  <label className="flex items-center gap-2 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">Min Price per Plate (₹)</label>
+                  <input 
+                    name="minPrice"
+                    value={formData.minPrice}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter minimum price" 
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Max Price per Plate (₹)</label>
+                  <input 
+                    name="maxPrice"
+                    value={formData.maxPrice}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter maximum price" 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Advance Payment Required *</label>
+                <div className="flex gap-3">
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                     <input 
                       type="radio" 
                       name="hasAdvancePayment" 
@@ -611,9 +710,9 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                       onChange={handleInputChange}
                       className="w-3.5 h-3.5 accent-red-600" 
                     /> 
-                    Yes
+                    <span className="text-gray-700">Yes</span>
                   </label>
-                  <label className="flex items-center gap-2 text-xs">
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                     <input 
                       type="radio" 
                       name="hasAdvancePayment" 
@@ -622,83 +721,90 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                       onChange={handleInputChange}
                       className="w-3.5 h-3.5 accent-red-600" 
                     /> 
-                    No
+                    <span className="text-gray-700">No</span>
                   </label>
                 </div>
                 
                 {formData.hasAdvancePayment === "yes" && (
-                  <input 
-                    name="advancePercent"
-                    value={formData.advancePercent}
-                    onChange={handleInputChange}
-                    className="input-field text-sm mt-3" 
-                    placeholder="Advance %" 
-                  />
+                  <div className="form-group mt-3">
+                    <label className="form-label">Advance Percentage</label>
+                    <input 
+                      name="advancePercent"
+                      value={formData.advancePercent}
+                      onChange={handleInputChange}
+                      className="input-field" 
+                      placeholder="Enter advance percentage" 
+                    />
+                  </div>
                 )}
               </div>
               
-              <input 
-                name="paymentTerms"
-                value={formData.paymentTerms}
-                onChange={handleInputChange}
-                className="input-field text-sm mt-3" 
-                placeholder="Balance Payment Terms" 
-              />
-            </>
+              <div className="form-group">
+                <label className="form-label">Balance Payment Terms</label>
+                <input 
+                  name="paymentTerms"
+                  value={formData.paymentTerms}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter payment terms" 
+                />
+              </div>
+            </div>
           )}
 
           {/* STEP 7: Hygiene & Quality Assurance */}
           {step === 6 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Hygiene & Quality Assurance
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Hygiene & Quality Assurance
+                </h3>
+              </div>
               
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm font-semibold text-red-800 mb-2">
-                    FSSAI Compliance: *
-                  </p>
-                  <div className="flex gap-4 pl-2">
-                    <label className="flex items-center gap-2 text-xs">
-                      <input 
-                        type="radio" 
-                        name="hasFssaiCompliance" 
-                        value="yes"
-                        checked={formData.hasFssaiCompliance === "yes"}
-                        onChange={handleInputChange}
-                        className="w-3.5 h-3.5 accent-red-600" 
-                      /> 
-                      Yes
-                    </label>
-                    <label className="flex items-center gap-2 text-xs">
-                      <input 
-                        type="radio" 
-                        name="hasFssaiCompliance" 
-                        value="no"
-                        checked={formData.hasFssaiCompliance === "no"}
-                        onChange={handleInputChange}
-                        className="w-3.5 h-3.5 accent-red-600" 
-                      /> 
-                      No
-                    </label>
-                  </div>
+              <div className="form-group">
+                <label className="form-label">FSSAI Compliance *</label>
+                <div className="flex gap-3">
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                    <input 
+                      type="radio" 
+                      name="hasFssaiCompliance" 
+                      value="yes"
+                      checked={formData.hasFssaiCompliance === "yes"}
+                      onChange={handleInputChange}
+                      className="w-3.5 h-3.5 accent-red-600" 
+                    /> 
+                    <span className="text-gray-700">Yes</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                    <input 
+                      type="radio" 
+                      name="hasFssaiCompliance" 
+                      value="no"
+                      checked={formData.hasFssaiCompliance === "no"}
+                      onChange={handleInputChange}
+                      className="w-3.5 h-3.5 accent-red-600" 
+                    /> 
+                    <span className="text-gray-700">No</span>
+                  </label>
                 </div>
-                
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Food Preparation Location *</label>
                 <input 
                   name="foodPrepLocation"
                   value={formData.foodPrepLocation}
                   onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Food Preparation Location *" 
+                  className="input-field" 
+                  placeholder="Enter food preparation location" 
                 />
-                
-                <div>
-                  <p className="text-sm font-semibold text-red-800 mb-2">
-                    Water Source (RO / Mineral): *
-                  </p>
-                  <div className="flex gap-4 pl-2">
-                    <label className="flex items-center gap-2 text-xs">
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">Water Source (RO/Mineral) *</label>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasWaterSource" 
@@ -707,9 +813,9 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      Yes
+                      <span className="text-gray-700">Yes</span>
                     </label>
-                    <label className="flex items-center gap-2 text-xs">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasWaterSource" 
@@ -718,17 +824,15 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      No
+                      <span className="text-gray-700">No</span>
                     </label>
                   </div>
                 </div>
                 
-                <div>
-                  <p className="text-sm font-semibold text-red-800 mb-2">
-                    Waste Management Arranged: *
-                  </p>
-                  <div className="flex gap-4 pl-2">
-                    <label className="flex items-center gap-2 text-xs">
+                <div className="form-group">
+                  <label className="form-label">Waste Management Arranged *</label>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasWasteManagement" 
@@ -737,9 +841,9 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      Yes
+                      <span className="text-gray-700">Yes</span>
                     </label>
-                    <label className="flex items-center gap-2 text-xs">
+                    <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                       <input 
                         type="radio" 
                         name="hasWasteManagement" 
@@ -748,154 +852,181 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         className="w-3.5 h-3.5 accent-red-600" 
                       /> 
-                      No
+                      <span className="text-gray-700">No</span>
                     </label>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* STEP 8: Service Coverage */}
           {step === 7 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Service Coverage
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Service Coverage
+                </h3>
+              </div>
               
-              <p className="text-sm font-semibold text-red-800 mb-2">
-                Preferred Locations: *
-              </p>
+              <div className="form-group">
+                <label className="form-label">Preferred Locations *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {locations.map(location => (
+                    <label key={location} className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                      <input 
+                        type="checkbox" 
+                        checked={formData.preferredLocations.includes(location)}
+                        onChange={() => handleArrayToggle('preferredLocations', location)}
+                        className="w-3.5 h-3.5 accent-red-600" 
+                      /> 
+                      <span className="text-gray-700">{location}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
               
-              <div className="grid grid-cols-2 gap-2 pl-2">
-                {locations.map(location => (
-                  <label key={location} className="flex items-center gap-2 text-xs">
+              <div className="form-group">
+                <label className="form-label">Transportation Charges Applicable *</label>
+                <div className="flex gap-3">
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                     <input 
-                      type="checkbox" 
-                      checked={formData.preferredLocations.includes(location)}
-                      onChange={() => handleArrayToggle('preferredLocations', location)}
+                      type="radio" 
+                      name="hasTransportCharges" 
+                      value="yes"
+                      checked={formData.hasTransportCharges === "yes"}
+                      onChange={handleInputChange}
                       className="w-3.5 h-3.5 accent-red-600" 
                     /> 
-                    {location}
+                    <span className="text-gray-700">Yes</span>
                   </label>
-                ))}
+                  <label className="flex items-center gap-2 text-xs bg-red-50 p-2 rounded border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
+                    <input 
+                      type="radio" 
+                      name="hasTransportCharges" 
+                      value="no"
+                      checked={formData.hasTransportCharges === "no"}
+                      onChange={handleInputChange}
+                      className="w-3.5 h-3.5 accent-red-600" 
+                    /> 
+                    <span className="text-gray-700">No</span>
+                  </label>
+                </div>
               </div>
-              
-              <p className="text-sm font-semibold text-red-800 mt-4 mb-2">
-                Transportation Charges Applicable: *
-              </p>
-              
-              <div className="flex gap-4 text-sm pl-2">
-                <label className="flex items-center gap-2">
-                  <input 
-                    type="radio" 
-                    name="hasTransportCharges" 
-                    value="yes"
-                    checked={formData.hasTransportCharges === "yes"}
-                    onChange={handleInputChange}
-                    className="w-3.5 h-3.5 accent-red-600" 
-                  /> 
-                  Yes
-                </label>
-                <label className="flex items-center gap-2">
-                  <input 
-                    type="radio" 
-                    name="hasTransportCharges" 
-                    value="no"
-                    checked={formData.hasTransportCharges === "no"}
-                    onChange={handleInputChange}
-                    className="w-3.5 h-3.5 accent-red-600" 
-                  /> 
-                  No
-                </label>
-              </div>
-            </>
+            </div>
           )}
 
           {/* STEP 9: Previous Experience */}
           {step === 8 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Previous Experience & References
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Previous Experience & References
+                </h3>
+              </div>
               
-              <input 
-                name="weddingsCatered"
-                value={formData.weddingsCatered}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Number of Weddings Catered" 
-                type="number"
-              />
+              <div className="form-group">
+                <label className="form-label">Number of Weddings Catered</label>
+                <input 
+                  name="weddingsCatered"
+                  value={formData.weddingsCatered}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter number of weddings catered" 
+                  type="number"
+                />
+              </div>
               
-              <textarea 
-                name="references"
-                value={formData.references}
-                onChange={handleInputChange}
-                className="input-field text-sm min-h-[100px]" 
-                placeholder="Major Clients / References (if any)" 
-              />
-            </>
+              <div className="form-group">
+                <label className="form-label">Major Clients / References (if any)</label>
+                <textarea 
+                  name="references"
+                  value={formData.references}
+                  onChange={handleInputChange}
+                  className="input-field min-h-[100px]" 
+                  placeholder="Enter references" 
+                />
+              </div>
+            </div>
           )}
 
           {/* STEP 10: Bank Details */}
           {step === 9 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                <Banknote className="inline w-4 h-4 mr-2" />
-                Bank Details (For Payments)
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm flex items-center justify-center">
+                  <Banknote className="inline w-4 h-4 mr-2" />
+                  Bank Details (For Payments)
+                </h3>
+              </div>
               
-              <input 
-                name="accountName"
-                value={formData.accountName}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Account Holder Name *" 
-              />
-              
-              <input 
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="Bank Name *" 
-              />
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="form-group">
+                <label className="form-label">Account Holder Name *</label>
                 <input 
-                  name="accountNumber"
-                  value={formData.accountNumber}
+                  name="accountName"
+                  value={formData.accountName}
                   onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="Account Number *" 
-                />
-                
-                <input 
-                  name="ifscCode"
-                  value={formData.ifscCode}
-                  onChange={handleInputChange}
-                  className="input-field text-sm" 
-                  placeholder="IFSC Code *" 
+                  className="input-field" 
+                  placeholder="Enter account holder name" 
                 />
               </div>
               
-              <input 
-                name="upiId"
-                value={formData.upiId}
-                onChange={handleInputChange}
-                className="input-field text-sm" 
-                placeholder="UPI ID (Optional)" 
-              />
-            </>
+              <div className="form-group">
+                <label className="form-label">Bank Name *</label>
+                <input 
+                  name="bankName"
+                  value={formData.bankName}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter bank name" 
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="form-group">
+                  <label className="form-label">Account Number *</label>
+                  <input 
+                    name="accountNumber"
+                    value={formData.accountNumber}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter account number" 
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">IFSC Code *</label>
+                  <input 
+                    name="ifscCode"
+                    value={formData.ifscCode}
+                    onChange={handleInputChange}
+                    className="input-field" 
+                    placeholder="Enter IFSC code" 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">UPI ID (Optional)</label>
+                <input 
+                  name="upiId"
+                  value={formData.upiId}
+                  onChange={handleInputChange}
+                  className="input-field" 
+                  placeholder="Enter UPI ID" 
+                />
+              </div>
+            </div>
           )}
 
           {/* STEP 11: Declaration */}
           {step === 10 && (
-            <>
-              <h3 className="text-red-800 font-bold text-center text-sm mb-2">
-                Declaration
-              </h3>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-3">
+                <h3 className="text-white font-bold text-center text-sm">
+                  Declaration
+                </h3>
+              </div>
               
               <div className="bg-gradient-to-r from-red-100 to-yellow-50 rounded-lg p-4 border border-red-200">
                 <p className="text-sm text-gray-700 mb-4 leading-relaxed">
@@ -904,8 +1035,8 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                   agreed menu, quality, hygiene standards, and terms.
                 </p>
                 
-                <div className="space-y-3">
-                  <label className="flex items-center gap-2 text-sm">
+                <div className="space-y-4">
+                  <label className="flex items-center gap-2 text-sm bg-red-50 p-3 rounded border border-red-100">
                     <input 
                       type="checkbox" 
                       name="declaration"
@@ -913,28 +1044,66 @@ export default function CateringVendorModal({ isOpen, onClose }) {
                       onChange={handleInputChange}
                       className="w-4 h-4 accent-red-600" 
                     />
-                    <span className="font-semibold">I accept the terms and conditions *</span>
+                    <span className="font-semibold text-red-700">I accept the terms and conditions *</span>
                   </label>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <input 
-                      className="input-field text-sm" 
-                      placeholder="Vendor Signature *" 
-                    />
-                    <input 
-                      className="input-field text-sm" 
-                      placeholder="Date *" 
-                      type="date"
-                    />
+                  <div className="form-group">
+                    <label className="form-label flex items-center gap-2">
+                      <Pen className="w-4 h-4 text-red-600" />
+                      Vendor Signature *
+                    </label>
+                    <p className="text-xs text-gray-600 mb-2">Draw your signature in the white space below</p>
+                    <div className="relative">
+                      <canvas
+                        ref={canvasRef}
+                        width={400}
+                        height={150}
+                        onMouseDown={startDrawing}
+                        onMouseMove={draw}
+                        onMouseUp={stopDrawing}
+                        onMouseLeave={stopDrawing}
+                        onTouchStart={(e) => {
+                          e.preventDefault();
+                          startDrawing(e);
+                        }}
+                        onTouchMove={(e) => {
+                          e.preventDefault();
+                          draw(e);
+                        }}
+                        onTouchEnd={stopDrawing}
+                        className="signature-canvas"
+                      />
+                      <button
+                        type="button"
+                        onClick={clearSignature}
+                        className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700 transition-colors flex items-center gap-1"
+                      >
+                        <Pen className="w-3 h-3" />
+                        Clear Signature
+                      </button>
+                    </div>
                   </div>
                   
-                  <input 
-                    className="input-field text-sm" 
-                    placeholder="Place *" 
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="form-group">
+                      <label className="form-label">Date *</label>
+                      <input 
+                        className="input-field" 
+                        placeholder="Select date" 
+                        type="date"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Place *</label>
+                      <input 
+                        className="input-field" 
+                        placeholder="Enter place" 
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
 
@@ -961,6 +1130,19 @@ export default function CateringVendorModal({ isOpen, onClose }) {
       </div>
 
       <style jsx>{`
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        
+        .form-label {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #991B1B;
+          padding-left: 0.25rem;
+        }
+        
         .input-field {
           width: 100%;
           padding: 0.75rem 1rem;
@@ -1025,6 +1207,16 @@ export default function CateringVendorModal({ isOpen, onClose }) {
           background: #FEE2E2;
           transform: translateY(-1px);
           box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+        }
+        
+        .signature-canvas {
+          width: 100%;
+          height: 150px;
+          border: 1.5px solid #DC2626;
+          border-radius: 0.5rem;
+          background: white;
+          cursor: crosshair;
+          touch-action: none;
         }
       `}</style>
     </div>
