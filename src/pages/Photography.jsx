@@ -454,167 +454,81 @@ const Photography = () => {
 
       {/* Main Content with Filter Sidebar */}
       <div className="container mx-auto px-2 md:px-4 py-2 md:py-4 lg:py-6">
-        {/* Mobile Filter Toggle Button */}
-        <div className="lg:hidden mb-2">
-          <button
-            onClick={() => setShowMobileFilter(!showMobileFilter)}
-            className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-2 px-3 rounded-md font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center text-xs"
-          >
-            <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
-            <span>{showMobileFilter ? 'Hide Filters' : 'Show Filters'}</span>
-            <svg className={`w-3.5 h-3.5 ml-1.5 transition-transform duration-300 ${showMobileFilter ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Filter Overlay */}
-        {showMobileFilter && (
-          <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-end sm:items-center justify-center">
-            <div className="bg-white w-full sm:max-w-md sm:mx-4 rounded-t-xl sm:rounded-lg shadow-2xl max-h-[80vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white z-10 p-3 border-b border-gray-200 flex justify-between items-center rounded-t-xl sm:rounded-t-lg">
-                <h3 className="text-sm sm:text-base font-bold text-red-800">Filter Photographers</h3>
-                <button
-                  onClick={() => setShowMobileFilter(false)}
-                  className="text-gray-500 hover:text-red-700 p-1"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              
-              <div className="p-3">
-                {/* Budget Range */}
-                <div className="mb-3">
-                  <label className="block text-xs font-bold text-gray-700 mb-1">Budget Range (₹)</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="number"
-                      placeholder="Min"
-                      value={minBudget}
-                      onChange={(e) => setMinBudget(e.target.value)}
-                      className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={maxBudget}
-                      onChange={(e) => setMaxBudget(e.target.value)}
-                      className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                    />
-                  </div>
-                </div>
-
-                {/* Type of Event */}
-                <div className="mb-3">
-                  <label className="block text-xs font-bold text-gray-700 mb-1">Type of Event</label>
-                  <select
-                    value={selectedEvent}
-                    onChange={(e) => setSelectedEvent(e.target.value)}
-                    className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                  >
-                    <option value="">All Event Types</option>
-                    {eventTypes.map((event) => (
-                      <option key={event} value={event}>{event}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Preferred State */}
-                <div className="mb-3">
-                  <label className="block text-xs font-bold text-gray-700 mb-1">Preferred State</label>
-                  <select
-                    value={selectedState}
-                    onChange={(e) => setSelectedState(e.target.value)}
-                    className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                  >
-                    <option value="">All States</option>
-                    {states.map((state) => (
-                      <option key={state} value={state}>{state}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* District */}
-                <div className="mb-3">
-                  <label className="block text-xs font-bold text-gray-700 mb-1">District</label>
-                  <select
-                    value={selectedDistrict}
-                    onChange={(e) => setSelectedDistrict(e.target.value)}
-                    className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                  >
-                    <option value="">All Districts</option>
-                    {districts.map((district) => (
-                      <option key={district} value={district}>{district}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Location */}
-                <div className="mb-3">
-                  <label className="block text-xs font-bold text-gray-700 mb-1">Location</label>
-                  <input
-                    type="text"
-                    placeholder="Enter location"
-                    value={selectedLocation}
-                    onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
-                  />
-                </div>
-
-                {/* Filter Buttons */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleFilter}
-                    className="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white py-2 px-3 rounded-md font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-sm hover:shadow-md text-xs"
-                  >
-                    Apply Filter
-                  </button>
-                  <button
-                    onClick={handleReset}
-                    className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-red-900 py-2 px-3 rounded-md font-medium hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-sm hover:shadow-md text-xs"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-6">
           {/* Main Content Area */}
           <div className="lg:flex-1">
-            {/* Photography Categories Grid */}
+            {/* Photography Categories Icons */}
             <section className="py-2 md:py-4">
               <h2 className="text-sm md:text-xl font-bold text-center text-red-800 mb-2 md:mb-5">
                 Our Photography Categories
               </h2>
-              <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-2 md:gap-4">
+              <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-1 md:gap-2 px-1">
                 {photographyCategories.map((category) => (
                   <div key={category.name} className="flex flex-col items-center group">
                     <Link 
                       to={category.path}
-                      className="relative block w-full aspect-square max-w-[70px] sm:max-w-[85px] md:max-w-[120px] mx-auto"
+                      className="relative block w-full aspect-square max-w-[55px] sm:max-w-[60px] md:max-w-[70px] mx-auto"
                     >
-                      <div className="w-full h-full rounded-full border-2 border-amber-700 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-sm hover:shadow-md transition-all duration-300">
+                      <div className="w-full h-full rounded-full border-2 border-amber-700 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-sm hover:shadow-md transition-all duration-300 p-0.5">
                         <img 
                           src={category.image}
                           alt={category.name} 
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full object-cover rounded-full transition-transform duration-300 group-hover:scale-110"
                         />
                       </div>
+                      <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-yellow-400 transition-all duration-300"></div>
                     </Link>
-                    <h3 className="mt-1 md:mt-2 text-center font-medium text-gray-800 text-[9px] sm:text-[10px] md:text-sm px-0.5 leading-tight">
+                    <h3 className="mt-1 text-center font-medium text-gray-800 text-[8px] sm:text-[9px] md:text-[10px] px-0.5 leading-tight line-clamp-2">
                       {category.name}
                     </h3>
                   </div>
                 ))}
               </div>
             </section>
+
+            {/* Mobile: Show Filters Button (Between Categories and Vendor Count) */}
+            <div className="lg:hidden mt-4 mb-2">
+              <button
+                onClick={() => setShowMobileFilter(true)}
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-2.5 px-3 rounded-md font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span className="text-sm">Show Filters</span>
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Show Applied Filters */}
+              <div className="mt-2 flex flex-wrap gap-1">
+                {selectedEvent && (
+                  <span className="inline-flex items-center bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
+                    Event: {selectedEvent}
+                    <button onClick={() => setSelectedEvent('')} className="ml-1 text-red-500 hover:text-red-700">
+                      ×
+                    </button>
+                  </span>
+                )}
+                {selectedState && (
+                  <span className="inline-flex items-center bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">
+                    State: {selectedState}
+                    <button onClick={() => setSelectedState('')} className="ml-1 text-yellow-500 hover:text-yellow-700">
+                      ×
+                    </button>
+                  </span>
+                )}
+                {(minBudget || maxBudget) && (
+                  <span className="inline-flex items-center bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                    Budget: {minBudget || '0'} - {maxBudget || '∞'}
+                    <button onClick={() => { setMinBudget(''); setMaxBudget(''); }} className="ml-1 text-green-500 hover:text-green-700">
+                      ×
+                    </button>
+                  </span>
+                )}
+              </div>
+            </div>
 
             {/* Vendor Count and Filter Results Section */}
             <section className="py-2 md:py-6">
@@ -874,9 +788,9 @@ const Photography = () => {
             </section>
           </div>
 
-          {/* Right Sidebar - Filter Section - Desktop Only */}
+          {/* Right Sidebar - Filter Section - Desktop Only - FIXED/POSITION STICKY */}
           <div className="hidden lg:block lg:w-72 flex-shrink-0">
-            <div className="sticky top-20 bg-white rounded-lg shadow-lg border border-red-200 p-4">
+            <div className="sticky top-24 bg-white rounded-lg shadow-lg border border-red-200 p-4 h-fit max-h-[calc(100vh-8rem)] overflow-y-auto">
               <h3 className="text-lg font-bold text-red-800 mb-4 text-center border-b border-yellow-500 pb-2">
                 Filter Photographers
               </h3>
@@ -978,6 +892,121 @@ const Photography = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Filter Overlay - Keep existing mobile filter overlay */}
+      {showMobileFilter && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-end sm:items-center justify-center">
+          <div className="bg-white w-full sm:max-w-md sm:mx-4 rounded-t-xl sm:rounded-lg shadow-2xl max-h-[80vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white z-10 p-3 border-b border-gray-200 flex justify-between items-center rounded-t-xl sm:rounded-t-lg">
+              <h3 className="text-sm sm:text-base font-bold text-red-800">Filter Photographers</h3>
+              <button
+                onClick={() => setShowMobileFilter(false)}
+                className="text-gray-500 hover:text-red-700 p-1"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="p-3">
+              {/* Budget Range */}
+              <div className="mb-3">
+                <label className="block text-xs font-bold text-gray-700 mb-1">Budget Range (₹)</label>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    value={minBudget}
+                    onChange={(e) => setMinBudget(e.target.value)}
+                    className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    value={maxBudget}
+                    onChange={(e) => setMaxBudget(e.target.value)}
+                    className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                  />
+                </div>
+              </div>
+
+              {/* Type of Event */}
+              <div className="mb-3">
+                <label className="block text-xs font-bold text-gray-700 mb-1">Type of Event</label>
+                <select
+                  value={selectedEvent}
+                  onChange={(e) => setSelectedEvent(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                >
+                  <option value="">All Event Types</option>
+                  {eventTypes.map((event) => (
+                    <option key={event} value={event}>{event}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Preferred State */}
+              <div className="mb-3">
+                <label className="block text-xs font-bold text-gray-700 mb-1">Preferred State</label>
+                <select
+                  value={selectedState}
+                  onChange={(e) => setSelectedState(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                >
+                  <option value="">All States</option>
+                  {states.map((state) => (
+                    <option key={state} value={state}>{state}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* District */}
+              <div className="mb-3">
+                <label className="block text-xs font-bold text-gray-700 mb-1">District</label>
+                <select
+                  value={selectedDistrict}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                >
+                  <option value="">All Districts</option>
+                  {districts.map((district) => (
+                    <option key={district} value={district}>{district}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Location */}
+              <div className="mb-3">
+                <label className="block text-xs font-bold text-gray-700 mb-1">Location</label>
+                <input
+                  type="text"
+                  placeholder="Enter location"
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+                />
+              </div>
+
+              {/* Filter Buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={handleFilter}
+                  className="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white py-2 px-3 rounded-md font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-sm hover:shadow-md text-xs"
+                >
+                  Apply Filter
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-red-900 py-2 px-3 rounded-md font-medium hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-sm hover:shadow-md text-xs"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
