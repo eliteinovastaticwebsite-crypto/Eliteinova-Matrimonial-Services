@@ -328,33 +328,52 @@ export default function CateringVendorRegistrationModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Steps Indicator */}
-        <div className="bg-gradient-to-r from-red-600/90 to-red-700/90 px-4 py-2 shrink-0 overflow-x-auto">
-          <div className="flex items-start justify-between min-w-max">
-            {steps.map((s, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center min-w-[45px]">
-                <div
-                  className={`w-6 h-6 rounded-full text-xs flex items-center justify-center font-bold ${
-                    i <= step
-                      ? "bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-900 shadow-lg"
-                      : "bg-red-800/50 text-yellow-100"
-                  }`}
-                >
-                  {i + 1}
-                </div>
-                <p
-                  className={`text-[7px] mt-1 text-center truncate w-full px-0.5 ${
-                    i === step
-                      ? "text-yellow-300 font-semibold"
-                      : "text-yellow-100/80"
-                  }`}
-                >
-                  {s}
-                </p>
-              </div>
-            ))}
+        {/* Steps Indicator - SIMPLE TWO ROW VERSION */}
+<div className="bg-gradient-to-r from-red-600/90 to-red-700/90 px-4 py-3 shrink-0 overflow-x-auto">
+  <div className="flex items-start justify-between min-w-max">
+    {steps.map((s, i) => {
+      // Split step name into two lines at natural break points
+      const splitStepName = () => {
+        const words = s.split(' ');
+        if (words.length <= 2) return s;
+        if (s.includes('&')) {
+          const parts = s.split(' & ');
+          return `${parts[0]}\n& ${parts[1]}`;
+        }
+        // Try to split after the first word
+        return `${words[0]}\n${words.slice(1).join(' ')}`;
+      };
+      
+      return (
+        <div key={i} className="flex-1 flex flex-col items-center min-w-[65px] sm:min-w-[75px] px-0.5">
+          {/* Step Number */}
+          <div
+            className={`w-8 h-8 rounded-full text-sm flex items-center justify-center font-bold mb-1 ${
+              i <= step
+                ? "bg-gradient-to-br from-yellow-400 to-yellow-600 text-red-900 shadow-lg ring-2 ring-yellow-300"
+                : "bg-red-800/70 text-yellow-100"
+            }`}
+          >
+            {i + 1}
+          </div>
+          
+          {/* Step Label */}
+          <div className="text-center w-full">
+            <p
+              className={`text-[10px] sm:text-xs font-medium leading-tight whitespace-pre-line ${
+                i === step
+                  ? "text-yellow-300 font-bold"
+                  : "text-yellow-100/90"
+              }`}
+            >
+              {splitStepName()}
+            </p>
           </div>
         </div>
+      );
+    })}
+  </div>
+</div>
 
         {/* SCROLLABLE CONTENT AREA */}
         <div className="flex-1 overflow-y-auto p-4">

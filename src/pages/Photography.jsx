@@ -457,12 +457,40 @@ const Photography = () => {
         <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-6">
           {/* Main Content Area */}
           <div className="lg:flex-1">
-            {/* Photography Categories Icons */}
+            {/* Photography Categories Icons - MOBILE: HORIZONTAL SCROLL */}
             <section className="py-2 md:py-4">
               <h2 className="text-sm md:text-xl font-bold text-center text-red-800 mb-2 md:mb-5">
                 Our Photography Categories
               </h2>
-              <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-1 md:gap-2 px-1">
+              
+              {/* Mobile: Horizontal Scroll */}
+              <div className="md:hidden overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex space-x-1 px-1 min-w-max">
+                  {photographyCategories.map((category) => (
+                    <div key={category.name} className="flex flex-col items-center group flex-shrink-0 w-16">
+                      <Link 
+                        to={category.path}
+                        className="relative block w-14 h-14 mx-auto"
+                      >
+                        <div className="w-full h-full rounded-full border-2 border-amber-700 overflow-hidden bg-gradient-to-br from-amber-50 to-yellow-50 shadow-sm hover:shadow-md transition-all duration-300 p-0.5">
+                          <img 
+                            src={category.image}
+                            alt={category.name} 
+                            className="w-full h-full object-cover rounded-full transition-transform duration-300 group-hover:scale-110"
+                          />
+                        </div>
+                        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-yellow-400 transition-all duration-300"></div>
+                      </Link>
+                      <h3 className="mt-1 text-center font-medium text-gray-800 text-[7px] px-0.5 leading-tight line-clamp-2">
+                        {category.name}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Desktop: Grid */}
+              <div className="hidden md:grid grid-cols-4 md:grid-cols-8 gap-1 md:gap-2 px-1">
                 {photographyCategories.map((category) => (
                   <div key={category.name} className="flex flex-col items-center group">
                     <Link 
@@ -486,72 +514,189 @@ const Photography = () => {
               </div>
             </section>
 
-            {/* Mobile: Show Filters Button (Between Categories and Vendor Count) */}
-            <div className="lg:hidden mt-4 mb-2">
-              <button
-                onClick={() => setShowMobileFilter(true)}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-2.5 px-3 rounded-md font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center"
-              >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-                <span className="text-sm">Show Filters</span>
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              
-              {/* Show Applied Filters */}
-              <div className="mt-2 flex flex-wrap gap-1">
-                {selectedEvent && (
-                  <span className="inline-flex items-center bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
-                    Event: {selectedEvent}
-                    <button onClick={() => setSelectedEvent('')} className="ml-1 text-red-500 hover:text-red-700">
-                      ×
-                    </button>
-                  </span>
-                )}
-                {selectedState && (
-                  <span className="inline-flex items-center bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">
-                    State: {selectedState}
-                    <button onClick={() => setSelectedState('')} className="ml-1 text-yellow-500 hover:text-yellow-700">
-                      ×
-                    </button>
-                  </span>
-                )}
-                {(minBudget || maxBudget) && (
-                  <span className="inline-flex items-center bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
-                    Budget: {minBudget || '0'} - {maxBudget || '∞'}
-                    <button onClick={() => { setMinBudget(''); setMaxBudget(''); }} className="ml-1 text-green-500 hover:text-green-700">
-                      ×
-                    </button>
-                  </span>
-                )}
-              </div>
-            </div>
+{/* Mobile: Show Filters Button and Vendor Count Section */}
+<div className="lg:hidden">
+  {/* Vendor Count Section - MOBILE: 2 COLUMNS */}
+  <section className="py-2 md:py-6">
+    <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-md shadow-md p-3 mb-3">
+      <div className="flex items-center justify-between">
+        {/* Left Column - Vendor Count (Bigger) */}
+        <div className="flex-1 pr-2">
+          <h3 className="text-sm font-bold text-white leading-tight">
+            {selectedEvent ? `${filteredVendors.length} ${selectedEvent} Vendors` : '16 Photography Vendors'}
+          </h3>
+          <p className="text-yellow-200 mt-0.5 text-[10px] leading-tight">
+            {selectedEvent ? `Showing results for "${selectedEvent}"` : 'Browse our professional photography vendors'}
+          </p>
+        </div>
+        
+        {/* Right Column - Price Range and Filter Icon */}
+        <div className="flex flex-col items-end">
+          <div className="bg-white/20 px-2 py-1 rounded-md mb-1">
+            <span className="text-white font-medium text-[9px]">Price Range:</span>
+            <span className="text-yellow-300 ml-1 text-[9px]">₹5,000 - ₹5,00,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {/* Applied Filters Tags */}
+    <div className="flex flex-wrap gap-1 mb-3">
+      {selectedEvent && (
+        <span className="inline-flex items-center bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
+          Event: {selectedEvent}
+          <button onClick={() => setSelectedEvent('')} className="ml-1 text-red-500 hover:text-red-700">
+            ×
+          </button>
+        </span>
+      )}
+      {selectedState && (
+        <span className="inline-flex items-center bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">
+          State: {selectedState}
+          <button onClick={() => setSelectedState('')} className="ml-1 text-yellow-500 hover:text-yellow-700">
+            ×
+          </button>
+        </span>
+      )}
+      {(minBudget || maxBudget) && (
+        <span className="inline-flex items-center bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+          Budget: {minBudget || '0'} - {maxBudget || '∞'}
+          <button onClick={() => { setMinBudget(''); setMaxBudget(''); }} className="ml-1 text-green-500 hover:text-green-700">
+            ×
+          </button>
+        </span>
+      )}
+    </div>
+  </section>
 
-            {/* Vendor Count and Filter Results Section */}
+  {/* NEW: Mobile Filters Section - Always Visible */}
+  <section className="py-2 mb-4">
+    <div className="bg-white rounded-md shadow-md border border-red-200 p-3">
+      {/* Filters Header */}
+      <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-2">
+        <h3 className="text-sm font-bold text-red-800 flex items-center">
+          <svg className="w-4 h-4 mr-1.5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filter Options
+        </h3>
+        <button 
+          onClick={handleReset}
+          className="text-xs font-medium text-red-600 hover:text-red-800 flex items-center"
+        >
+          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Reset
+        </button>
+      </div>
+
+      {/* Filter Options in Grid Layout */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* Budget Range */}
+        <div className="col-span-2">
+          <label className="block text-xs font-bold text-gray-700 mb-1">Budget (₹)</label>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              placeholder="Min"
+              value={minBudget}
+              onChange={(e) => setMinBudget(e.target.value)}
+              className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+            />
+            <input
+              type="number"
+              placeholder="Max"
+              value={maxBudget}
+              onChange={(e) => setMaxBudget(e.target.value)}
+              className="w-1/2 px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+            />
+          </div>
+        </div>
+
+        {/* Event Type */}
+        <div className="col-span-2">
+          <label className="block text-xs font-bold text-gray-700 mb-1">Event Type</label>
+          <select
+            value={selectedEvent}
+            onChange={(e) => setSelectedEvent(e.target.value)}
+            className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+          >
+            <option value="">All Events</option>
+            {eventTypes.map((event) => (
+              <option key={event} value={event}>{event}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* State */}
+        <div>
+          <label className="block text-xs font-bold text-gray-700 mb-1">State</label>
+          <select
+            value={selectedState}
+            onChange={(e) => setSelectedState(e.target.value)}
+            className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+          >
+            <option value="">All States</option>
+            {states.map((state) => (
+              <option key={state} value={state}>{state}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* District */}
+        <div>
+          <label className="block text-xs font-bold text-gray-700 mb-1">District</label>
+          <select
+            value={selectedDistrict}
+            onChange={(e) => setSelectedDistrict(e.target.value)}
+            className="w-full px-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+          >
+            <option value="">All Districts</option>
+            {districts.map((district) => (
+              <option key={district} value={district}>{district}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Location */}
+        <div className="col-span-2">
+          <label className="block text-xs font-bold text-gray-700 mb-1">Location</label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="City or area"
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+              className="w-full pl-8 pr-2 py-1.5 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 text-xs"
+            />
+            <svg className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Apply Filter Button */}
+      <button
+        onClick={handleFilter}
+        className="w-full mt-4 bg-gradient-to-r from-red-600 to-red-700 text-white py-2.5 px-3 rounded-md font-bold hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center text-sm"
+      >
+        <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        Apply Filters
+        <span className="ml-1.5 bg-white/30 px-1.5 py-0.5 rounded text-xs">
+          ({filteredVendors.length} found)
+        </span>
+      </button>
+    </div>
+  </section>
+</div>
+
+            {/* Vendor Profiles */}
             <section className="py-2 md:py-6">
-              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-md shadow-md p-2 md:p-4 mb-2 md:mb-5">
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-1.5 md:gap-2">
-                  <div className="text-center sm:text-left">
-                    <h3 className="text-xs sm:text-sm md:text-lg font-bold text-white">
-                      {selectedEvent ? `${filteredVendors.length} ${selectedEvent} Vendors Available` : '16 Photography Vendors Available'}
-                    </h3>
-                    <p className="text-yellow-200 mt-0.5 text-[9px] md:text-xs">
-                      {selectedEvent ? `Showing results for "${selectedEvent}"` : 'Browse our professional photography vendors'}
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="bg-white/20 px-2 md:px-3 py-0.5 md:py-1 rounded-md">
-                      <span className="text-white font-medium text-[9px] md:text-xs">Price Range:</span>
-                      <span className="text-yellow-300 ml-1 text-[9px] md:text-xs">₹5,000 - ₹5,00,000</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Vendor Profiles */}
               {filteredVendors.length > 0 ? (
                 <div className="space-y-2 md:space-y-5">
                   {filteredVendors.map((vendor) => (

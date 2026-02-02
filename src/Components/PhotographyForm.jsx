@@ -327,8 +327,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 1: Vendor Details */}
             {step === 0 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
-                  <Camera className="inline w-4 h-4 mr-2" />
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
+                  <Camera className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                   Vendor Basic Details
                 </h3>
                 
@@ -359,12 +359,12 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                   <div className="space-y-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {serviceTypes.map(service => (
-                        <label key={service} className="flex items-center gap-2 text-sm">
+                        <label key={service} className="flex items-center gap-2 text-xs sm:text-sm">
                           <input 
                             type="checkbox" 
                             checked={formData.selectedServices.includes(service)}
                             onChange={() => handleServiceToggle(service)}
-                            className="w-4 h-4 accent-red-600" 
+                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                           /> 
                           <span>{service}</span>
                         </label>
@@ -372,7 +372,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                     </div>
                     
                     <div className="flex items-center gap-2 mt-3">
-                      <label className="text-sm font-semibold whitespace-nowrap">Other:</label>
+                      <label className="text-xs sm:text-sm font-semibold whitespace-nowrap">Other:</label>
                       <input 
                         name="otherService"
                         value={formData.otherService}
@@ -389,7 +389,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 2: Contact Information */}
             {step === 1 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
                   Contact Information
                 </h3>
                 
@@ -435,7 +435,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="input-field min-h-[80px]" 
+                    className="input-field min-h-[60px] sm:min-h-[80px]" 
                     placeholder="Enter office address" 
                     rows="3"
                   />
@@ -480,7 +480,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 3: Business & Legal Details */}
             {step === 2 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
                   Business & Legal Details
                 </h3>
                 
@@ -488,14 +488,14 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                   <label className="form-label">Business Type *</label>
                   <div className="grid grid-cols-2 gap-2">
                     {businessTypes.map(type => (
-                      <label key={type} className="flex items-center gap-2 text-sm">
+                      <label key={type} className="flex items-center gap-2 text-xs sm:text-sm">
                         <input 
                           type="radio" 
                           name="businessType" 
                           value={type}
                           checked={formData.businessType === type}
                           onChange={handleInputChange}
-                          className="w-4 h-4 accent-red-600" 
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                         /> 
                         {type}
                       </label>
@@ -542,8 +542,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 4: Equipment & Team Details */}
             {step === 3 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
-                  <Camera className="inline w-4 h-4 mr-2" />
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
+                  <Camera className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                   Equipment & Team Details
                 </h3>
                 
@@ -583,7 +583,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                 
                 <div className="form-group">
                   <label className="form-label">Backup Equipment Available *</label>
-                  <div className="flex gap-4 text-sm">
+                  <div className="flex gap-4 text-xs sm:text-sm">
                     <label className="flex items-center gap-2">
                       <input 
                         type="radio" 
@@ -591,7 +591,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         value="yes"
                         checked={formData.hasBackup === "yes"}
                         onChange={handleInputChange}
-                        className="w-4 h-4 accent-red-600" 
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                       /> 
                       Yes
                     </label>
@@ -602,7 +602,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         value="no"
                         checked={formData.hasBackup === "no"}
                         onChange={handleInputChange}
-                        className="w-4 h-4 accent-red-600" 
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                       /> 
                       No
                     </label>
@@ -614,7 +614,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 5: Service Coverage */}
             {step === 4 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
                   Service Coverage
                 </h3>
                 
@@ -622,12 +622,12 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                   <label className="form-label">Preferred Wedding Locations *</label>
                   <div className="grid grid-cols-2 gap-2">
                     {locations.map(location => (
-                      <label key={location} className="flex items-center gap-2 text-sm">
+                      <label key={location} className="flex items-center gap-2 text-xs sm:text-sm">
                         <input 
                           type="checkbox" 
                           checked={formData.preferredLocations.includes(location)}
                           onChange={() => handleLocationToggle(location)}
-                          className="w-4 h-4 accent-red-600" 
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                         /> 
                         {location}
                       </label>
@@ -637,7 +637,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                 
                 <div className="form-group">
                   <label className="form-label">Travel Charges Applicable *</label>
-                  <div className="flex gap-4 text-sm">
+                  <div className="flex gap-4 text-xs sm:text-sm">
                     <label className="flex items-center gap-2">
                       <input 
                         type="radio" 
@@ -645,7 +645,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         value="yes"
                         checked={formData.hasTravelCharges === "yes"}
                         onChange={handleInputChange}
-                        className="w-4 h-4 accent-red-600" 
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                       /> 
                       Yes
                     </label>
@@ -656,7 +656,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         value="no"
                         checked={formData.hasTravelCharges === "no"}
                         onChange={handleInputChange}
-                        className="w-4 h-4 accent-red-600" 
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                       /> 
                       No
                     </label>
@@ -666,15 +666,15 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                 {/* Service Offers Section */}
                 <div className="form-group">
                   <label className="form-label flex items-center gap-2">
-                    <span className="text-sm">Special Service Offers / Description</span>
-                    <span className="text-xs text-gray-500">(Optional)</span>
+                    <span className="text-xs sm:text-sm">Special Service Offers / Description</span>
+                    <span className="text-[10px] sm:text-xs text-gray-500">(Optional)</span>
                   </label>
-                  <div className="bg-white rounded-lg border border-red-200 p-3 shadow-sm">
+                  <div className="bg-white rounded-lg border border-red-200 p-2 sm:p-3 shadow-sm">
                     <textarea 
                       name="serviceOffers"
                       value={formData.serviceOffers}
                       onChange={handleInputChange}
-                      className="w-full h-32 text-sm resize-none focus:outline-none"
+                      className="w-full h-24 sm:h-32 text-xs sm:text-sm resize-none focus:outline-none"
                       placeholder="Describe your special offers, unique services, or any additional information about your photography services."
                     />
                   </div>
@@ -683,13 +683,13 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                 {/* Photos Section */}
                 <div className="form-group">
                   <label className="form-label flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4" />
-                    <span className="text-sm">Work Photos</span>
-                    <span className="text-xs text-gray-500">(Max 3)</span>
+                    <ImageIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-xs sm:text-sm">Work Photos</span>
+                    <span className="text-[10px] sm:text-xs text-gray-500">(Max 3)</span>
                   </label>
-                  <div className="bg-white rounded-lg border border-red-200 p-3 shadow-sm">
+                  <div className="bg-white rounded-lg border border-red-200 p-2 sm:p-3 shadow-sm">
                     {/* Upload area */}
-                    <div className="border-2 border-dashed border-red-200 rounded-lg p-4 text-center mb-3">
+                    <div className="border-2 border-dashed border-red-200 rounded-lg p-3 sm:p-4 text-center mb-2 sm:mb-3">
                       <input
                         type="file"
                         id="workPhotos"
@@ -699,16 +699,16 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         className="hidden"
                       />
                       <label htmlFor="workPhotos" className="cursor-pointer flex flex-col items-center">
-                        <Upload className="w-8 h-8 text-red-400 mb-2" />
-                        <span className="text-sm text-gray-600">Click to upload photos</span>
-                        <span className="text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 5MB each</span>
+                        <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-red-400 mb-1 sm:mb-2" />
+                        <span className="text-xs sm:text-sm text-gray-600">Click to upload photos</span>
+                        <span className="text-[10px] sm:text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 5MB each</span>
                       </label>
                     </div>
                     
                     {/* Preview uploaded photos */}
                     {formData.workPhotos.length > 0 && (
-                      <div className="mt-3">
-                        <h4 className="text-sm font-semibold text-gray-700 mb-2">Uploaded Photos ({formData.workPhotos.length}/3)</h4>
+                      <div className="mt-2 sm:mt-3">
+                        <h4 className="text-xs sm:text-sm font-semibold text-gray-700 mb-2">Uploaded Photos ({formData.workPhotos.length}/3)</h4>
                         <div className="grid grid-cols-3 gap-2">
                           {formData.workPhotos.map((photo, index) => (
                             <div key={index} className="relative group">
@@ -724,9 +724,9 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                                 onClick={() => removePhoto(index)}
                                 className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 transition-colors"
                               >
-                                <Trash2 className="w-3 h-3" />
+                                <Trash2 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                               </button>
-                              <p className="text-xs text-gray-600 truncate mt-1">{photo.name}</p>
+                              <p className="text-[10px] sm:text-xs text-gray-600 truncate mt-1">{photo.name}</p>
                             </div>
                           ))}
                         </div>
@@ -738,27 +738,27 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                 {/* Work Links Section */}
                 <div className="form-group">
                   <label className="form-label flex items-center gap-2">
-                    <LinkIcon className="w-4 h-4" />
-                    <span className="text-sm">Work Links / Portfolio</span>
-                    <span className="text-xs text-gray-500">(Optional)</span>
+                    <LinkIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-xs sm:text-sm">Work Links / Portfolio</span>
+                    <span className="text-[10px] sm:text-xs text-gray-500">(Optional)</span>
                   </label>
-                  <div className="bg-white rounded-lg border border-red-200 p-3 shadow-sm">
+                  <div className="bg-white rounded-lg border border-red-200 p-2 sm:p-3 shadow-sm">
                     {formData.workLinks.map((link, index) => (
                       <div key={index} className="flex gap-2 mb-2 last:mb-0">
                         <input
                           type="url"
                           value={link}
                           onChange={(e) => handleWorkLinkChange(index, e.target.value)}
-                          className="input-field flex-1 py-2"
+                          className="input-field flex-1 py-1.5 sm:py-2"
                           placeholder="Enter link to your work (Google Drive, Dropbox, etc.)"
                         />
                         {formData.workLinks.length > 1 && (
                           <button
                             type="button"
                             onClick={() => removeWorkLink(index)}
-                            className="bg-red-100 text-red-600 hover:bg-red-200 rounded-lg px-3 transition-colors"
+                            className="bg-red-100 text-red-600 hover:bg-red-200 rounded-lg px-2 sm:px-3 transition-colors"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                           </button>
                         )}
                       </div>
@@ -768,14 +768,14 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                       <button
                         type="button"
                         onClick={addWorkLink}
-                        className="mt-2 text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+                        className="mt-2 text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
                       >
                         <span>+ Add another link</span>
                         <span className="text-gray-500">({5 - formData.workLinks.length} remaining)</span>
                       </button>
                     )}
                     
-                    <div className="text-xs text-gray-500 mt-3">
+                    <div className="text-[10px] sm:text-xs text-gray-500 mt-2 sm:mt-3">
                       <p>• Add links to your portfolio, Google Drive, or cloud storage</p>
                       <p>• Ensure links are publicly accessible</p>
                       <p>• You can add up to 5 links</p>
@@ -788,8 +788,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 6: Packages & Pricing */}
             {step === 5 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
-                  <Banknote className="inline w-4 h-4 mr-2" />
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
+                  <Banknote className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                   Packages & Pricing
                 </h3>
                 
@@ -853,7 +853,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 7: Delivery Timeline */}
             {step === 6 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
                   Delivery Timeline
                 </h3>
                 
@@ -898,8 +898,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 8: Portfolio & Online Presence */}
             {step === 7 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
-                  <Globe className="inline w-4 h-4 mr-2" />
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
+                  <Globe className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                   Portfolio & Online Presence
                 </h3>
                 
@@ -941,8 +941,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 9: Bank Details */}
             {step === 8 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
-                  <Banknote className="inline w-4 h-4 mr-2" />
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
+                  <Banknote className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                   Bank Details (For Payments)
                 </h3>
                 
@@ -1006,40 +1006,40 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
             {/* STEP 10: Declaration */}
             {step === 9 && (
               <div className="space-y-4">
-                <h3 className="text-red-800 font-bold text-center text-sm mb-3">
+                <h3 className="text-red-800 font-bold text-center text-xs sm:text-sm mb-3">
                   Declaration
                 </h3>
                 
-                <div className="bg-gradient-to-r from-red-100 to-yellow-50 rounded-lg p-4 border border-red-200">
-                  <p className="text-sm text-gray-700 mb-3 leading-relaxed">
+                <div className="bg-gradient-to-r from-red-100 to-yellow-50 rounded-lg p-3 sm:p-4 border border-red-200">
+                  <p className="text-xs sm:text-sm text-gray-700 mb-3 leading-relaxed">
                     I hereby declare that the above information is true and correct. 
                     I agree to provide photography services professionally for marriage events 
                     as per agreed terms and conditions.
                   </p>
                   
                   <div className="space-y-3">
-                    <label className="flex items-center gap-2 text-sm">
+                    <label className="flex items-center gap-2 text-xs sm:text-sm">
                       <input 
                         type="checkbox" 
                         name="declaration"
                         checked={formData.declaration}
                         onChange={handleInputChange}
-                        className="w-4 h-4 accent-red-600" 
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 accent-red-600" 
                       />
                       <span className="font-semibold">I accept the terms and conditions *</span>
                     </label>
                     
                     <div className="form-group">
                       <label className="form-label flex items-center gap-2">
-                        <Pen className="w-4 h-4" />
-                        <span className="text-sm">Vendor Signature *</span>
+                        <Pen className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="text-xs sm:text-sm">Vendor Signature *</span>
                       </label>
-                      <p className="text-xs text-gray-600 mb-2">Draw your signature in the box below</p>
+                      <p className="text-[10px] sm:text-xs text-gray-600 mb-2">Draw your signature in the box below</p>
                       <div className="relative">
                         <canvas
                           ref={canvasRef}
                           width={400}
-                          height={120}
+                          height={100}
                           onMouseDown={startDrawing}
                           onMouseMove={draw}
                           onMouseUp={stopDrawing}
@@ -1058,7 +1058,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
                         <button
                           type="button"
                           onClick={clearSignature}
-                          className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700 transition-colors"
+                          className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs hover:bg-red-700 transition-colors"
                         >
                           Clear
                         </button>
@@ -1089,11 +1089,11 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
         </div>
 
         {/* FOOTER */}
-        <div className="flex gap-3 p-4 border-t border-red-200 bg-gradient-to-r from-red-50 to-yellow-50 shrink-0 rounded-b-2xl">
+        <div className="flex gap-2 sm:gap-3 p-3 sm:p-4 border-t border-red-200 bg-gradient-to-r from-red-50 to-yellow-50 shrink-0 rounded-b-2xl">
 
           {step > 0 && (
             <button 
-              className="btn-outline-red text-sm px-4 py-2" 
+              className="btn-outline-red text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2" 
               onClick={() => setStep(step - 1)}
             >
               Back
@@ -1101,7 +1101,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
           )}
           
           <button
-            className="btn-primary-red ml-auto text-sm px-4 py-2"
+            className="btn-primary-red ml-auto text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
             onClick={() => (step === 9 ? handleSubmit() : setStep(step + 1))}
             disabled={step === 9 && !formData.declaration}
           >
@@ -1115,8 +1115,8 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
         .form-group {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
+          gap: 0.375rem;
+          margin-bottom: 0.75rem;
         }
         
         .form-group:last-child {
@@ -1124,7 +1124,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
         }
         
         .form-label {
-          font-size: 0.875rem;
+          font-size: 0.6875rem;
           font-weight: 600;
           color: #991B1B;
           padding-left: 0.25rem;
@@ -1132,36 +1132,36 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
         
         .input-field {
           width: 100%;
-          padding: 0.75rem 1rem;
+          padding: 0.5rem 0.75rem;
           border: 1.5px solid #DC2626;
-          border-radius: 0.75rem;
-          font-size: 0.875rem;
+          border-radius: 0.5rem;
+          font-size: 0.6875rem;
           background: white;
           transition: all 0.3s ease;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .input-field:focus {
           outline: none;
           border-color: #B91C1C;
-          box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+          box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
         }
         
         .input-field::placeholder {
           color: #9CA3AF;
-          font-size: 0.875rem;
+          font-size: 0.6875rem;
         }
         
         .btn-primary-red {
           background: linear-gradient(135deg, #DC2626, #B91C1C);
           color: white;
           font-weight: 600;
-          border-radius: 0.75rem;
+          border-radius: 0.5rem;
           border: none;
           cursor: pointer;
           transition: all 0.3s ease;
           box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
-          min-width: 120px;
+          min-width: 100px;
         }
         
         .btn-primary-red:hover:not(:disabled) {
@@ -1181,10 +1181,10 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
           color: #DC2626;
           font-weight: 600;
           border: 1.5px solid #DC2626;
-          border-radius: 0.75rem;
+          border-radius: 0.5rem;
           cursor: pointer;
           transition: all 0.3s ease;
-          min-width: 100px;
+          min-width: 80px;
         }
         
         .btn-outline-red:hover {
@@ -1195,9 +1195,9 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
         
         .signature-canvas {
           width: 100%;
-          height: 120px;
+          height: 100px;
           border: 1.5px solid #DC2626;
-          border-radius: 0.75rem;
+          border-radius: 0.5rem;
           background: white;
           cursor: crosshair;
           touch-action: none;
@@ -1205,7 +1205,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
 
         /* Custom scrollbar for the content area */
         .overflow-y-auto::-webkit-scrollbar {
-          width: 6px;
+          width: 5px;
         }
         
         .overflow-y-auto::-webkit-scrollbar-track {
@@ -1222,7 +1222,7 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
           background: #B91C1C;
         }
 
-        /* Responsive adjustments */
+        /* Responsive adjustments for larger screens */
         @media (min-width: 640px) {
           .form-group {
             gap: 0.625rem;
@@ -1230,12 +1230,12 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
           }
           
           .form-label {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
           
           .input-field {
             padding: 0.875rem 1.125rem;
-            font-size: 1rem;
+            font-size: 0.875rem;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             border-radius: 0.875rem;
           }
@@ -1245,11 +1245,11 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
           }
           
           .input-field::placeholder {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
           
           .signature-canvas {
-            height: 140px;
+            height: 120px;
             border-radius: 0.875rem;
           }
           
